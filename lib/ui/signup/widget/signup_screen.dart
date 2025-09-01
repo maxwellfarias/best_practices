@@ -98,7 +98,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
   Widget _buildLogo() {
     return Row(
       children: [
-        Container(
+        SizedBox(
           width: 32,
           height: 32,
           child: CustomPaint(

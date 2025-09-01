@@ -138,17 +138,15 @@ class ApiClientImpl implements ApiClient {
     try {
       final requestData = <String, dynamic>{};
       
-      if (data.title != null) requestData['title'] = data.title;
-      if (data.description != null) requestData['description'] = data.description;
-      if (data.isCompleted != null) {
-        requestData['is_completed'] = data.isCompleted;
-        if (data.isCompleted == true) {
-          requestData['completed_at'] = DateTime.now().toIso8601String();
-        } else {
-          requestData['completed_at'] = null;
-        }
+      requestData['title'] = data.title;
+      requestData['description'] = data.description;
+      requestData['is_completed'] = data.isCompleted;
+      if (data.isCompleted == true) {
+        requestData['completed_at'] = DateTime.now().toIso8601String();
+      } else {
+        requestData['completed_at'] = null;
       }
-
+    
       final response = await _dio.patch(
         '$_baseUrl/tasks/$id',
         data: requestData,
@@ -221,7 +219,7 @@ class ApiClientImpl implements ApiClient {
           return Result.error(ErroDeComunicacaoException());
       }
       return _handleResponse(response);
-    } catch (e, stackTrace) {
+    } catch (e) {
       // AppLogger.error( 'Erro inesperado na requisição ${metodo.name} para $url', tag: _logTag, error: e, stackTrace: stackTrace);
       return Result.error(UnknownErrorException());
     }

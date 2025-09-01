@@ -1,4 +1,3 @@
-import 'package:equatable/equatable.dart';
 
 /// Modelo de domínio para uma tarefa
 /// 

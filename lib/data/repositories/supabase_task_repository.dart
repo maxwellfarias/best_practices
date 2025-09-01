@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'package:dio/dio.dart';
 import 'package:mastering_tests/exceptions/app_exception.dart';
 import 'package:mastering_tests/routing/routes.dart';
 import '../../domain/models/task.dart';
@@ -18,12 +17,14 @@ import 'task_repository.dart';
 
 
 const apiKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImRxc2Jwc2lmZHl1amJidmJ6amRxIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTY3MDI0MDUsImV4cCI6MjA3MjI3ODQwNX0.lW-mzhw2eB5CbT_hNFNeYAVNOcEqOGiibgeNR4L4Pck";
-class SupabaseTaskRepository implements TaskRepository {
+
+class TaskRepositoryImpl implements TaskRepository {
   final ApiClient _apiService;
   final StreamController<List<Task>> _taskStreamController;
 
-  SupabaseTaskRepository(this._apiService)
-      : _taskStreamController = StreamController<List<Task>>.broadcast();
+  TaskRepositoryImpl({required ApiClient apiService})
+      : _apiService = apiService,
+        _taskStreamController = StreamController<List<Task>>.broadcast();
 
   @override
   Stream<List<Task>> get taskStream => _taskStreamController.stream;

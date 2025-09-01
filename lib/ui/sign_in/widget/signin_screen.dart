@@ -121,7 +121,7 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   Widget _buildLogo() {
-    return Container(
+    return SizedBox(
       width: 40,
       height: 40,
       child: CustomPaint(

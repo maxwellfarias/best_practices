@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'delete_confirmation_dialog.dart';
 
 class DeleteConfirmationScreen extends StatelessWidget {
   const DeleteConfirmationScreen({super.key});

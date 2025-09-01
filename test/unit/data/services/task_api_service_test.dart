@@ -1,7 +1,7 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:dio/dio.dart';
-import 'package:mastering_tests/data/services/task_api_service.dart';
+import 'package:mastering_tests/data/services/api/api_service.dart';
 import 'package:mastering_tests/domain/models/task.dart';
 
 // Mocks
@@ -9,13 +9,13 @@ class MockDio extends Mock implements Dio {}
 
 void main() {
   group('SupabaseTaskApiService', () {
-    late SupabaseTaskApiService service;
+    late ApiClientImpl service;
     late MockDio mockDio;
     const baseUrl = 'https://api.example.com';
 
     setUp(() {
       mockDio = MockDio();
-      service = SupabaseTaskApiService(dio: mockDio, baseUrl: baseUrl);
+      service = ApiClientImpl(dio: mockDio, baseUrl: baseUrl);
     });
 
     setUpAll(() {

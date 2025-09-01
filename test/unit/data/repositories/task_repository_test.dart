@@ -2,13 +2,13 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:dio/dio.dart';
 import 'package:mastering_tests/data/repositories/supabase_task_repository.dart';
-import 'package:mastering_tests/data/services/task_api_service.dart';
+import 'package:mastering_tests/data/services/api/api_service.dart';
 import 'package:mastering_tests/data/models/task_api_model.dart';
 import 'package:mastering_tests/domain/models/task.dart';
 import 'package:mastering_tests/utils/result.dart';
 
 // Mocks
-class MockTaskApiService extends Mock implements TaskApiService {}
+class MockTaskApiService extends Mock implements ApiClient {}
 
 void main() {
   group('SupabaseTaskRepository', () {

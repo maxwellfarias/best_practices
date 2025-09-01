@@ -22,7 +22,7 @@ class MyApp extends StatelessWidget {
         fontFamily: 'Spline Sans',
         useMaterial3: true,
       ),
-      home: const LoginScreen(),
+      home: const TodoListScreen(),
       debugShowCheckedModeBanner: false,
     );
   }

@@ -1,130 +1,133 @@
-/// Result pattern para tratamento de erros
-/// 
-/// Implementação do Result pattern conforme documentação oficial do Dart
-/// para tratamento de erros sem exceptions.
+// =============================================================================
+// RESULT PATTERN - IMPLEMENTAÇÃO COMPLETA
+// =============================================================================
+
+import 'package:mastering_tests/exceptions/app_exception.dart';
+
+/// Classe base que representa um resultado que pode ser sucesso ou erro
 sealed class Result<T> {
   const Result();
 
-  /// Cria um resultado de sucesso
-  factory Result.success(T data) = Success<T>;
+  /// Cria um resultado de sucesso contendo o [value].
+  const factory Result.ok(T value) = Ok._;
 
-  /// Cria um resultado de erro
-  factory Result.failure(String error) = Failure<T>;
+  /// Cria um resultado de erro contendo uma [AppException].
+  const factory Result.error(AppException error) = Error._;
 
-  /// Verifica se o resultado é um sucesso
-  bool get isSuccess => this is Success<T>;
+  // ---------------------------------------------------------------------------
+  // Métodos utilitários para manipulação de resultados
+  // ---------------------------------------------------------------------------
 
-  /// Verifica se o resultado é um erro
-  bool get isFailure => this is Failure<T>;
+  /// Aplica uma transformação sobre o valor de sucesso (caso seja `Ok`).
+  ///
+  /// Se for `Error`, o erro é propagado sem alterações.
+  Result<R> map<R>(R Function(T value) transform) => switch (this) {
+        Ok(:final value) => Result.ok(transform(value)),
+        Error(:final error) => Result.error(error),
+      };
 
-  /// Executa diferentes ações baseadas no tipo do resultado
-  R when<R>({
-    required R Function(T data) success,
-    required R Function(String error) failure,
+  /// Aplica uma transformação que retorna outro `Result`.
+  ///
+  /// Útil para **encadear operações que também retornam Result**.
+  /// Evita `Result<Result<T>>` aninhados.
+  Result<R> flatMap<R>(Result<R> Function(T value) transform) => switch (this) {
+        Ok(:final value) => transform(value),
+        Error(:final error) => Result.error(error),
+      };
+
+  /// Aplica uma transformação apenas no erro (caso seja `Error`).
+  Result<T> mapError(AppException Function(AppException error) transform) =>
+      switch (this) {
+        Ok(:final value) => Result.ok(value),
+        Error(:final error) => Result.error(transform(error)),
+      };
+
+  /// Processa tanto o caso de sucesso quanto de erro e retorna um único valor.
+  ///
+  /// É útil para conversão de Result → qualquer outro tipo (`String`, `Widget`, etc.).
+  R fold<R>({
+    required R Function(T value) onOk,
+    required R Function(Exception error) onError,
+  }) =>
+      switch (this) {
+        Ok(:final value) => onOk(value),
+        Error(:final error) => onError(error),
+      };
+
+  // ---------------------------------------------------------------------------
+  // Getters úteis
+  // ---------------------------------------------------------------------------
+
+  /// Retorna `true` se o resultado for um sucesso (`Ok`).
+  bool get isOk => this is Ok<T>;
+
+  /// Retorna `true` se o resultado for um erro (`Error`).
+  bool get isError => this is Error<T>;
+}
+
+/// Representa um resultado de **sucesso** contendo um valor de tipo `T`.
+final class Ok<T> extends Result<T> {
+  const Ok._(this.value);
+
+  /// Valor retornado em caso de sucesso.
+  final T value;
+
+  @override
+  String toString() => 'Result<$T>.ok($value)';
+}
+
+/// Representa um resultado de **erro** contendo uma exceção.
+final class Error<T> extends Result<T> {
+  const Error._(this.error);
+
+  /// Erro retornado em caso de falha.
+  final AppException error;
+
+  @override
+  String toString() => 'Result<$T>.error($error)';
+}
+
+// -----------------------------------------------------------------------------
+// Extensões para facilitar o uso síncrono e assíncrono
+// -----------------------------------------------------------------------------
+
+/// Extensão para executar ações baseadas no resultado
+extension ResultWhenExt<T> on Result<T> {
+  /// Executa funções diferentes dependendo se é `Ok` ou `Error`.
+  ///
+  /// Útil para evitar escrever `switch` manualmente.
+  void when({
+    required void Function(T value) onOk,
+    required void Function(Exception error) onError,
   }) {
-    return switch (this) {
-      Success<T>(data: final data) => success(data),
-      Failure<T>(error: final error) => failure(error),
-    };
-  }
-
-  /// Executa diferentes ações baseadas no tipo do resultado (opcional)
-  R? whenOrNull<R>({
-    R Function(T data)? success,
-    R Function(String error)? failure,
-  }) {
-    return switch (this) {
-      Success<T>(data: final data) => success?.call(data),
-      Failure<T>(error: final error) => failure?.call(error),
-    };
-  }
-
-  /// Mapeia o valor de sucesso para outro tipo
-  Result<R> map<R>(R Function(T) mapper) {
-    return when(
-      success: (data) => Result.success(mapper(data)),
-      failure: (error) => Result.failure(error),
-    );
-  }
-
-  /// Mapeia erros para outros erros
-  Result<T> mapError(String Function(String) mapper) {
-    return when(
-      success: (data) => Result.success(data),
-      failure: (error) => Result.failure(mapper(error)),
-    );
+    switch (this) {
+      case Ok(:final value):
+       onOk(value);
+      case Error(:final error):
+        onError(error);
+    }
   }
 }
 
-/// Implementação para resultado de sucesso
-final class Success<T> extends Result<T> {
-  final T data;
+/// Extensão para operações assíncronas
+extension ResultAsyncExt<T> on Result<T> {
+  /// Aplica uma transformação assíncrona sobre o valor de sucesso (`Ok`).
+  ///
+  /// Retorna um novo `Result` encapsulando o valor transformado.
+  Future<Result<R>> mapAsync<R>(
+      Future<R> Function(T value) transform) async =>
+      switch (this) {
+        Ok(:final value) => Result.ok(await transform(value)),
+        Error(:final error) => Result.error(error),
+      };
 
-  const Success(this.data);
-
-  @override
-  bool operator ==(Object other) {
-    return identical(this, other) ||
-        (other is Success<T> && other.data == data);
-  }
-
-  @override
-  int get hashCode => data.hashCode;
-
-  @override
-  String toString() => 'Success(data: $data)';
-}
-
-/// Implementação para resultado de erro
-final class Failure<T> extends Result<T> {
-  final String error;
-
-  const Failure(this.error);
-
-  @override
-  bool operator ==(Object other) {
-    return identical(this, other) ||
-        (other is Failure<T> && other.error == error);
-  }
-
-  @override
-  int get hashCode => error.hashCode;
-
-  @override
-  String toString() => 'Failure(error: $error)';
-}
-
-/// Aliases para compatibilidade com implementação oficial do Flutter
-typedef Ok<T> = Success<T>;
-typedef Error<T> = Failure<T>;
-
-/// Extensões úteis para Result
-extension ResultExtensions<T> on Result<T> {
-  /// Retorna o valor se for Success, caso contrário retorna null
-  T? get valueOrNull => when(
-        success: (value) => value,
-        failure: (_) => null,
-      );
-
-  /// Retorna o erro se for Failure, caso contrário retorna null
-  String? get errorOrNull => when(
-        success: (_) => null,
-        failure: (error) => error,
-      );
-
-  /// Retorna o valor se for Success, caso contrário retorna o valor padrão
-  T valueOr(T defaultValue) => when(
-        success: (value) => value,
-        failure: (_) => defaultValue,
-      );
-
-  /// Executa uma ação apenas se for Success
-  void onSuccess(void Function(T value) action) {
-    whenOrNull(success: action);
-  }
-
-  /// Executa uma ação apenas se for Failure
-  void onError(void Function(String error) action) {
-    whenOrNull(failure: action);
-  }
+  /// Aplica uma transformação assíncrona que retorna outro `Result`.
+  ///
+  /// Ideal para encadear chamadas async que podem falhar.
+  Future<Result<R>> flatMapAsync<R>(
+      Future<Result<R>> Function(T value) transform) async =>
+      switch (this) {
+        Ok(:final value) => await transform(value),
+        Error(:final error) => Result.error(error),
+      };
 }

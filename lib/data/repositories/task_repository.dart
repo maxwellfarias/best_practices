@@ -14,10 +14,10 @@ abstract interface class TaskRepository {
   Future<Result<Task>> getTask(String id);
 
   /// Cria uma nova tarefa
-  Future<Result<Task>> createTask(CreateTaskData data);
+  Future<Result<Task>> createTask(Task data);
 
   /// Atualiza uma tarefa existente
-  Future<Result<Task>> updateTask(String id, UpdateTaskData data);
+  Future<Result<Task>> updateTask(String id, Task data);
 
   /// Remove uma tarefa
   Future<Result<void>> deleteTask(String id);

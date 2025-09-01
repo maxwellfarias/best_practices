@@ -1,8 +1,10 @@
 import 'dart:async';
 import 'package:dio/dio.dart';
+import 'package:mastering_tests/exceptions/app_exception.dart';
+import 'package:mastering_tests/routing/routes.dart';
 import '../../domain/models/task.dart';
 import '../../utils/result.dart';
-import '../services/task_api_service.dart';
+import '../services/api/api_service.dart';
 import 'task_repository.dart';
 
 /// Implementação do repositório usando Supabase
@@ -10,8 +12,14 @@ import 'task_repository.dart';
 /// Esta implementação converte entre modelos de API e domínio,
 /// trata erros e implementa o padrão Result para comunicação
 /// segura com as camadas superiores.
+/// 
+/// 
+/// 
+
+
+const apiKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImRxc2Jwc2lmZHl1amJidmJ6amRxIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTY3MDI0MDUsImV4cCI6MjA3MjI3ODQwNX0.lW-mzhw2eB5CbT_hNFNeYAVNOcEqOGiibgeNR4L4Pck";
 class SupabaseTaskRepository implements TaskRepository {
-  final TaskApiService _apiService;
+  final ApiClient _apiService;
   final StreamController<List<Task>> _taskStreamController;
 
   SupabaseTaskRepository(this._apiService)
@@ -23,15 +31,16 @@ class SupabaseTaskRepository implements TaskRepository {
   @override
   Future<Result<List<Task>>> getTasks() async {
     try {
-      final apiTasks = await _apiService.getTasks();
-      final tasks = apiTasks.map((apiTask) => apiTask.toDomain()).toList();
-      
-      // Atualiza o stream para listeners
-      _taskStreamController.add(tasks);
-      
-      return Result.success(tasks);
+      return await _apiService.request(url: Routes.getTasks, metodo: MetodoHttp.get, headers: { 'apikey': apiKey, 'Authorization': 'Bearer $apiKey'})
+          .then(
+            (response) => response.map(
+              (jsonList) => (jsonList as List)
+                  .map((json) => Task.fromJson(json))
+                  .toList(),
+            ),
+          );
     } catch (e) {
-      return Result.failure(_handleError(e));
+      return Result.error(UnknownErrorException());
     }
   }
 
@@ -41,14 +50,14 @@ class SupabaseTaskRepository implements TaskRepository {
       final apiTask = await _apiService.getTask(id);
       final task = apiTask.toDomain();
       
-      return Result.success(task);
+      return Result.ok(task);
     } catch (e) {
-      return Result.failure(_handleError(e));
+      return Result.error(UnknownErrorException());
     }
   }
 
   @override
-  Future<Result<Task>> createTask(CreateTaskData data) async {
+  Future<Result<Task>> createTask(Task data) async {
     try {
       final apiTask = await _apiService.createTask(data);
       final task = apiTask.toDomain();
@@ -56,14 +65,14 @@ class SupabaseTaskRepository implements TaskRepository {
       // Recarrega a lista para atualizar o stream
       _refreshTaskStream();
       
-      return Result.success(task);
+      return Result.ok(task);
     } catch (e) {
-      return Result.failure(_handleError(e));
+      return Result.error(UnknownErrorException());
     }
   }
 
   @override
-  Future<Result<Task>> updateTask(String id, UpdateTaskData data) async {
+  Future<Result<Task>> updateTask(String id, Task data) async {
     try {
       final apiTask = await _apiService.updateTask(id, data);
       final task = apiTask.toDomain();
@@ -71,9 +80,9 @@ class SupabaseTaskRepository implements TaskRepository {
       // Recarrega a lista para atualizar o stream
       _refreshTaskStream();
       
-      return Result.success(task);
+      return Result.ok(task);
     } catch (e) {
-      return Result.failure(_handleError(e));
+      return Result.error(UnknownErrorException());
     }
   }
 
@@ -85,9 +94,9 @@ class SupabaseTaskRepository implements TaskRepository {
       // Recarrega a lista para atualizar o stream
       _refreshTaskStream();
       
-      return Result.success(null);
+      return Result.ok(null);
     } catch (e) {
-      return Result.failure(_handleError(e));
+      return Result.error(UnknownErrorException());
     }
   }
 
@@ -99,51 +108,11 @@ class SupabaseTaskRepository implements TaskRepository {
       _taskStreamController.add(tasks);
     } catch (e) {
       // Se falhar ao recarregar, emite erro no stream
-      _taskStreamController.addError(_handleError(e));
+      // _taskStreamController.addError(_handleError(e));
     }
   }
 
-  /// Converte exceções em mensagens de erro amigáveis
-  String _handleError(dynamic error) {
-    if (error is DioException) {
-      switch (error.type) {
-        case DioExceptionType.connectionTimeout:
-        case DioExceptionType.sendTimeout:
-        case DioExceptionType.receiveTimeout:
-          return 'Tempo limite de conexão excedido. Verifique sua conexão.';
-        
-        case DioExceptionType.connectionError:
-          return 'Erro de conexão. Verifique sua internet.';
-        
-        case DioExceptionType.badResponse:
-          final statusCode = error.response?.statusCode;
-          switch (statusCode) {
-            case 400:
-              return 'Dados inválidos fornecidos.';
-            case 401:
-              return 'Não autorizado. Faça login novamente.';
-            case 403:
-              return 'Acesso negado.';
-            case 404:
-              return 'Tarefa não encontrada.';
-            case 422:
-              return 'Dados inválidos ou incompletos.';
-            case 500:
-              return 'Erro interno do servidor. Tente novamente.';
-            default:
-              return 'Erro no servidor (${statusCode}). Tente novamente.';
-          }
-        
-        case DioExceptionType.cancel:
-          return 'Operação cancelada.';
-        
-        default:
-          return error.message ?? 'Erro desconhecido na comunicação.';
-      }
-    }
-    
-    return 'Erro inesperado: $error';
-  }
+ 
 
   /// Dispose do stream controller
   void dispose() {

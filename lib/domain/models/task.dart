@@ -5,7 +5,7 @@ import 'package:equatable/equatable.dart';
 /// Representa uma tarefa no sistema com todos os dados necessários
 /// para a lógica de negócio. Usa Equatable para facilitar comparações
 /// em testes.
-class Task extends Equatable {
+final class Task {
   final String id;
   final String title;
   final String description;
@@ -21,6 +21,30 @@ class Task extends Equatable {
     required this.createdAt,
     this.completedAt,
   });
+
+  factory Task.fromJson(dynamic json) {
+    return Task(
+      id: json['id'] ?? '',
+      title: json['title'] ?? '',
+      description: json['description'] ?? '',
+      isCompleted: json['is_completed'] ?? false,
+      createdAt: DateTime.parse(json['created_at'] ?? DateTime.now().toString()),
+      completedAt: json['completed_at'] != null
+          ? DateTime.parse(json['completed_at'])
+          : null,
+    );
+  }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'id': id,
+      'title': title,
+      'description': description,
+      'is_completed': isCompleted,
+      'created_at': createdAt.toIso8601String(),
+      'completed_at': completedAt?.toIso8601String(),
+    };
+  }
 
   /// Cria uma cópia da tarefa com alguns campos atualizados
   Task copyWith({
@@ -42,16 +66,6 @@ class Task extends Equatable {
   }
 
   @override
-  List<Object?> get props => [
-        id,
-        title,
-        description,
-        isCompleted,
-        createdAt,
-        completedAt,
-      ];
-
-  @override
   String toString() {
     return 'Task('
         'id: $id, '
@@ -62,34 +76,6 @@ class Task extends Equatable {
         'completedAt: $completedAt'
         ')';
   }
-}
 
-/// Dados para criar uma nova tarefa
-class CreateTaskData extends Equatable {
-  final String title;
-  final String description;
 
-  const CreateTaskData({
-    required this.title,
-    required this.description,
-  });
-
-  @override
-  List<Object> get props => [title, description];
-}
-
-/// Dados para atualizar uma tarefa existente
-class UpdateTaskData extends Equatable {
-  final String? title;
-  final String? description;
-  final bool? isCompleted;
-
-  const UpdateTaskData({
-    this.title,
-    this.description,
-    this.isCompleted,
-  });
-
-  @override
-  List<Object?> get props => [title, description, isCompleted];
 }

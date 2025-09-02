@@ -1,66 +1,50 @@
 import 'package:flutter/material.dart';
+import 'package:mastering_tests/ui/tasks/view_model/task_view_model.dart';
+import 'package:provider/provider.dart';
 
 class TodoListScreen extends StatefulWidget {
-  const TodoListScreen({super.key});
+  const TodoListScreen({required this.viewModel, super.key});
+
+  final TaskViewModel viewModel;
 
   @override
   State<TodoListScreen> createState() => _TodoListScreenState();
 }
 
 class _TodoListScreenState extends State<TodoListScreen> {
-  
 
+  @override
+  initState() {
+    super.initState();
+    widget.viewModel.getTasks.addListener(_onGetTasksResult);
+  }
 
+  @override
+  void dispose() {
+    widget.viewModel.getTasks.removeListener(_onGetTasksResult);
+    super.dispose();
+  }
+
+  final _tasks = <TaskItem>[];
+
+  _onGetTasksResult() {
+    if (mounted && widget.viewModel.getTasks.completed) {
+      final List<TaskItem> tasks = widget.viewModel.getTasks.value ?? [];
+      // Handle the result of the getTasks call
+    }
+  }
   String selectedFilter = 'All';
-  List<TaskItem> tasks = [
-    TaskItem(
-      title: 'Grocery Shopping',
-      description: 'Buy groceries for the week.',
-      createdAt: '2024-01-15 10:00 AM',
-      isCompleted: false,
-      accentColor: const Color(0xFFF0FBF4), // mint-green
-    ),
-    TaskItem(
-      title: 'Project Meeting',
-      description: 'Discuss project milestones with the team.',
-      createdAt: '2024-01-15 11:30 AM',
-      isCompleted: true,
-      accentColor: const Color(0xFFF2F0FB), // lavender
-    ),
-    TaskItem(
-      title: 'Gym Workout',
-      description: 'Leg day workout.',
-      createdAt: '2024-01-15 02:00 PM',
-      isCompleted: false,
-      accentColor: const Color(0xFFFFF0E6), // peach
-    ),
-    TaskItem(
-      title: 'Read a Book',
-      description: 'Read \'The Great Gatsby\'.',
-      createdAt: '2024-01-15 04:30 PM',
-      isCompleted: true,
-      accentColor: const Color(0xFFE6F7FF), // sky-blue
-    ),
-    TaskItem(
-      title: 'Dinner with Friends',
-      description: 'Meet friends at a restaurant.',
-      createdAt: '2024-01-15 07:00 PM',
-      isCompleted: true,
-      accentColor: const Color(0xFFFFF0F3), // soft-pink
-    ),
-  ];
-
-  int get totalTasks => tasks.length;
-  int get completedTasks => tasks.where((task) => task.isCompleted).length;
+  int get totalTasks => _tasks.length;
+  int get completedTasks => _tasks.where((task) => task.isCompleted).length;
 
   List<TaskItem> get filteredTasks {
     switch (selectedFilter) {
       case 'Active':
-        return tasks.where((task) => !task.isCompleted).toList();
+        return _tasks.where((task) => !task.isCompleted).toList();
       case 'Completed':
-        return tasks.where((task) => task.isCompleted).toList();
+        return _tasks.where((task) => task.isCompleted).toList();
       default:
-        return tasks;
+        return _tasks;
     }
   }
 

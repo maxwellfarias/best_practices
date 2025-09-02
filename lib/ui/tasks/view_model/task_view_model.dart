@@ -14,12 +14,12 @@ final class TaskViewModel {
   }
 
   late final Command0<List<Task>> getTasks;
-
-  Future<Result<List<Task>>> _getTasks() async => await _taskRepository.getTasks();
   late final Command1<void, Task> addTask;
   late final Command1<void, Task> updateTask;
   late final Command1<void, String> deleteTask;
 
+  Future<Result<List<Task>>> _getTasks() async => await _taskRepository.getTasks();
+  
   Future<Result<void>> _addTask(Task task) async => await _taskRepository.createTask(task);
 
   Future<Result<void>> _updateTask(Task task) async => await _taskRepository.updateTask(task);

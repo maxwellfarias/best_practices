@@ -1,6 +1,6 @@
 import 'dart:async';
 import 'package:mastering_tests/exceptions/app_exception.dart';
-import 'package:mastering_tests/routing/urls.dart';
+import 'package:mastering_tests/config/constants.dart';
 import '../../domain/models/task.dart';
 import '../../utils/result.dart';
 import '../services/api/api_service.dart';
@@ -38,9 +38,9 @@ class TaskRepositoryImpl implements TaskRepository {
   }
   
   @override
-  Future<Result<Task>> updateTask(Task data) async {
+  Future<Result<void>> updateTask(Task data) async {
       return await _apiService.request(
         url: Urls.updateTaskUrl(data.id), metodo: MetodoHttp.put, headers: {'apikey': apiKey, 'Authorization': 'Bearer $apiKey'},body: data.toJson())
-          .map((response) => Task.fromJson(response));
+          .map((_) => Result.ok(null));
   }
 }

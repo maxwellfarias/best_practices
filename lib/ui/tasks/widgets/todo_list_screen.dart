@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:mastering_tests/ui/tasks/view_model/task_view_model.dart';
-import 'package:provider/provider.dart';
 
 class TodoListScreen extends StatefulWidget {
   const TodoListScreen({required this.viewModel, super.key});
@@ -27,10 +26,19 @@ class _TodoListScreenState extends State<TodoListScreen> {
 
   final _tasks = <TaskItem>[];
 
-  _onGetTasksResult() {
+  void _onGetTasksResult() {
     if (mounted && widget.viewModel.getTasks.completed) {
-      final List<TaskItem> tasks = widget.viewModel.getTasks.value ?? [];
-      // Handle the result of the getTasks call
+      final tasks = widget.viewModel.getTasks.value ?? [];
+      setState(() {
+        _tasks.clear();
+        _tasks.addAll(tasks.map((t) => TaskItem(
+          title: t.title,
+          description: t.description,
+          createdAt: t.createdAt.toString(),
+          isCompleted: t.isCompleted,
+          accentColor: Colors.primaries[t.title.hashCode % Colors.primaries.length],
+        )));
+      });
     }
   }
   String selectedFilter = 'All';

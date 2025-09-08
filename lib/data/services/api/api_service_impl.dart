@@ -1,8 +1,7 @@
 import 'package:dio/dio.dart';
+import 'package:mastering_tests/data/services/api/api_serivce.dart';
 import 'package:mastering_tests/exceptions/app_exception.dart';
 import 'package:mastering_tests/utils/result.dart';
-import '../../../domain/models/task.dart';
-import '../../models/task_api_model.dart';
 
 /// Interface para o serviço de API de tarefas
 /// 
@@ -10,15 +9,6 @@ import '../../models/task_api_model.dart';
 /// Separado do repositório para permitir diferentes implementações
 /// (Supabase, Firebase, REST API customizada, etc.)
 
-enum MetodoHttp {
-  get,
-  post,
-  put,
-  delete,
-}
-abstract interface class ApiClient {
-  Future<Result<dynamic>> request({required String url, required MetodoHttp metodo, Map? body, Map? headers});
-}
 
 /// Implementação do serviço usando Supabase REST API
 class ApiClientImpl implements ApiClient {

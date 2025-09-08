@@ -1,6 +1,6 @@
 import 'package:mastering_tests/data/repositories/task_repository.dart';
 import 'package:mastering_tests/domain/models/task.dart';
-import 'package:mastering_tests/ui/tasks/view_model/task_commands.dart';
+import 'package:mastering_tests/utils/command.dart';
 import 'package:mastering_tests/utils/result.dart';
 
 final class TaskViewModel {

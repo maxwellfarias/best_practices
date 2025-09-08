@@ -27,6 +27,7 @@ abstract class Command<T> extends ChangeNotifier {
   Result? get result => _result;
 
   T? get value => _result is Ok<T> ? (_result as Ok<T>).value : null;
+ 
 
   AppException? get exception => _result is Error<T> ? (_result as Error<T>).error : null;
 
@@ -59,6 +60,8 @@ class Command0<T> extends Command<T> {
   Command0(this._action);
 
   final CommandAction0<T> _action;
+
+   String get foo => 'bar';
 
   Future<void> execute() async {
     await _execute(_action);

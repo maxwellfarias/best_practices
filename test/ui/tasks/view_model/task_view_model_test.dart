@@ -6,7 +6,8 @@ import 'package:mastering_tests/ui/home/viewmodel/task_viewmodel.dart';
 import 'package:mastering_tests/utils/result.dart';
 import 'package:mocktail/mocktail.dart';
 
-import '../../../../helpers/test_helpers.dart';
+import '../../../helpers/test_helpers.dart';
+
 
 class MockTaskRepository extends Mock implements TaskRepository {}
 

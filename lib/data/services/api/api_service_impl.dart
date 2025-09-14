@@ -42,9 +42,10 @@ class ApiClientImpl implements ApiClient {
           response = await _dio.put(url, options: Options(headers: defaultHeaders), data: body)
               .timeout(timeOutDuration);
           break;
-        default:  
-          // AppLogger.error('Método HTTP não suportado: ${metodo.name}', tag: _logTag);
-          return Result.error(ErroDeComunicacaoException());
+        case MetodoHttp.delete:
+          response = await _dio.delete(url, options: Options(headers: defaultHeaders))
+              .timeout(timeOutDuration);
+          break;
       }
       return _handleResponse(response);
     } catch (e) {

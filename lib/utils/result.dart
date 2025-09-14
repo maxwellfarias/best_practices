@@ -95,6 +95,9 @@ extension ResultWhenExt<T> on Result<T> {
         onError(error);
     }
   }
+
+
+  T? get valueOrNull => this is Ok<T> ? (this as Ok<T>).value : null;
 }
 
 /// Extensão para operações assíncronas

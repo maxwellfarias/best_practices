@@ -4,23 +4,18 @@ import 'package:mastering_tests/routing/router.dart';
 import 'package:provider/provider.dart';
 
 void main() {
-  runApp( MultiProvider(providers: providers, child: MyApp()));
+  runApp( MultiProvider(providers: providers, child: TaskApp()));
 }
 
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+
+final class TaskApp extends StatelessWidget {
+  const TaskApp({super.key});
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp.router(
-      title: 'Todo App',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-        fontFamily: 'Spline Sans',
-        useMaterial3: true,
-      ),
+      title: 'Task App',
       routerConfig: router(),
-      debugShowCheckedModeBanner: false,
     );
   }
 }

@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'package:mastering_tests/data/services/api/api_serivce.dart';
 import 'package:mastering_tests/exceptions/app_exception.dart';
-import 'package:mastering_tests/config/constants.dart';
+import 'package:mastering_tests/config/constants/urls.dart';
 import '../../domain/models/task.dart';
 import '../../utils/result.dart';
 import 'task_repository.dart';
@@ -19,28 +19,26 @@ class TaskRepositoryImpl implements TaskRepository {
   Future<Result<List<Task>>> getTasks() async {
     try {
       return await _apiService.request(url: Urls.getTasks, metodo: MetodoHttp.get, headers: { 'apikey': apiKey, 'Authorization': 'Bearer $apiKey'})
-      .map((jsonList) => (jsonList as List).map((json) => Task.fromJson(json)).toList());
+      .map((jsonList) => (jsonList as List)
+      .map((json) => Task.fromJson(json)).toList());
     } catch (e) {
       return Result.error(UnknownErrorException());
     }
   }
   
   @override
-  Future<Result<void>> createTask({required Task task}) async {
-      return await _apiService.request(url: Urls.createTask, metodo: MetodoHttp.post, body: task.toJson(), headers: { 'apikey': apiKey, 'Authorization': 'Bearer $apiKey'})
-        .map((_) => Result.ok(null));
+  Future<Result<dynamic>> createTask({required Task task}) async {
+      return await _apiService.request(url: Urls.createTask, metodo: MetodoHttp.post, body: task.toJson(), headers: { 'apikey': apiKey, 'Authorization': 'Bearer $apiKey'});
   }
   
   @override
-  Future<Result<void>> deleteTask({required String id}) async {
-      return await _apiService.request(url: Urls.deleteTaskUrl(id), metodo: MetodoHttp.delete, headers: {'apikey': apiKey, 'Authorization': 'Bearer $apiKey'})
-        .map((_) => Result.ok(null));
+  Future<Result<dynamic>> deleteTask({required String id}) async {
+      return await _apiService.request(url: Urls.deleteTaskUrl(id), metodo: MetodoHttp.delete, headers: {'apikey': apiKey, 'Authorization': 'Bearer $apiKey'});
   }
   
   @override
-  Future<Result<void>> updateTask({required Task task}) async {
+  Future<Result<dynamic>> updateTask({required Task task}) async {
       return await _apiService.request(
-        url: Urls.updateTaskUrl(task.id), metodo: MetodoHttp.put, headers: {'apikey': apiKey, 'Authorization': 'Bearer $apiKey'},body: task.toJson())
-          .map((_) => Result.ok(null));
+        url: Urls.updateTaskUrl(task.id), metodo: MetodoHttp.put, headers: {'apikey': apiKey, 'Authorization': 'Bearer $apiKey'},body: task.toJson());
   }
 }

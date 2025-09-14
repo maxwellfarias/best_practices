@@ -11,11 +11,11 @@ abstract interface class TaskRepository {
   Future<Result<List<Task>>> getTasks();
 
   /// Cria uma nova tarefa
-  Future<Result<void>> createTask({required Task task});
+  Future<Result<dynamic>> createTask({required Task task});
 
   /// Atualiza uma tarefa existente
-  Future<Result<void>> updateTask({required Task task});
+  Future<Result<dynamic>> updateTask({required Task task});
 
   /// Remove uma tarefa
-  Future<Result<void>> deleteTask({required String id});
+  Future<Result<dynamic>> deleteTask({required String id});
 }

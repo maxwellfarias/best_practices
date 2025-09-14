@@ -72,7 +72,7 @@ void main() {
         );
 
         verify(() => mockApiClient.request(
-              url: any(named: 'url', that: contains('supabase.co/rest/v1/todos')),
+              url: any(named: 'url', that: contains('https://dqsbpsifdyujbbvbzjdq.supabase.co/rest/v1/todos?select=*')),
               metodo: MetodoHttp.get,
               headers: any(named: 'headers'),
             )).called(1);
@@ -167,7 +167,7 @@ void main() {
         expect(result.isOk, isTrue);
 
         verify(() => mockApiClient.request(
-              url: any(named: 'url', that: contains('supabase.co/rest/v1/todos')),
+              url: any(named: 'url', that: contains('https://dqsbpsifdyujbbvbzjdq.supabase.co/rest/v1/todos')),
               metodo: MetodoHttp.post,
               body: task.toJson(),
               headers: any(named: 'headers'),
@@ -257,7 +257,7 @@ void main() {
         expect(result.isOk, isTrue);
 
         verify(() => mockApiClient.request(
-              url: any(named: 'url', that: contains('supabase.co/rest/v1/todos')),
+              url: any(named: 'url', that: contains('https://dqsbpsifdyujbbvbzjdq.supabase.co/rest/v1/todos?id=eq.')),
               metodo: MetodoHttp.put,
               body: task.toJson(),
               headers: any(named: 'headers'),
@@ -339,7 +339,7 @@ void main() {
         expect(result.isOk, isTrue);
 
         verify(() => mockApiClient.request(
-              url: any(named: 'url', that: contains('supabase.co/rest/v1/todos')),
+              url: any(named: 'url', that: contains('https://dqsbpsifdyujbbvbzjdq.supabase.co/rest/v1/todos?id=eq.')),
               metodo: MetodoHttp.delete,
               headers: any(named: 'headers'),
             )).called(1);

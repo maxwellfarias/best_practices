@@ -67,7 +67,7 @@ void main() {
 
           // Assert
           expect(result.isOk, isTrue);
-          expect((result as Ok).value, equals(testData));
+          expect(result.valueOrNull, equals(testData));
 
           verify(() => mockDio.post(
                 testUrl,
@@ -220,7 +220,14 @@ void main() {
       });
 
       group('unsupported methods', () {
-        test('should return communication error for DELETE method', () async {
+        test('should return success for DELETE method', () async {
+          
+          //Arrange
+          when(() => mockResponse.statusCode)
+            .thenReturn(200);
+          when(() => mockDio.delete(any(), options: any(named: 'options')))
+          .thenAnswer((_) async => mockResponse);
+          
           // Act
           final result = await apiClient.request(
             url: testUrl,
@@ -228,9 +235,7 @@ void main() {
           );
 
           // Assert
-          expect(result.isError, isTrue);
-          expect((result as Error).error, isA<ErroDeComunicacaoException>());
-          verifyZeroInteractions(mockDio);
+          expect(result.isOk, isTrue);
         });
       });
 

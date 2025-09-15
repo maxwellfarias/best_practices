@@ -6,10 +6,6 @@ import 'package:mastering_tests/domain/models/task.dart';
 /// Extension methods para facilitar a navegação entre telas
 extension NavigationExtensions on BuildContext {
   
-  // Navigation to authentication screens
-  void goToSignIn() => go(Routes.signIn);
-  void goToSignUp() => go(Routes.signUp);
-  
   // Navigation to home
   void goToHome() => go(Routes.home);
   
@@ -60,8 +56,8 @@ class TaskNavigationHelper {
       'title': task.title,
       'description': task.description,
       'completed': task.isCompleted,
-      'date': task.createdAt.toIso8601String(),
-      'time': '${task.createdAt.hour.toString().padLeft(2, '0')}:${task.createdAt.minute.toString().padLeft(2, '0')}',
+      'date': task.date.toIso8601String(),
+      'time': '${task.date.hour.toString().padLeft(2, '0')}:${task.date.minute.toString().padLeft(2, '0')}',
       'category': 'Personal', // Default category since domain Task doesn't have this
     };
   }
@@ -73,7 +69,7 @@ class TaskNavigationHelper {
       title: taskMap['title'] ?? '',
       description: taskMap['description'] ?? '',
       isCompleted: taskMap['completed'] ?? false,
-      createdAt: taskMap['date'] != null 
+      date: taskMap['date'] != null 
         ? DateTime.parse(taskMap['date'])
         : DateTime.now(),
       completedAt: taskMap['completed'] == true 

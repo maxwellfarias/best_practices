@@ -155,7 +155,7 @@ class _ModernHomeScreenState extends State<ModernHomeScreen> {
                   ),
                   const SizedBox(width: 4),
                   Text(
-                    _formatDate(task.createdAt),
+                    _formatDate(task.date),
                     style: TextStyle(
                       fontSize: 12,
                       color: Colors.grey[600],

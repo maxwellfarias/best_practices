@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mastering_tests/domain/models/task.dart';
 import 'package:mastering_tests/routing/navigation_extensions.dart';
 
 class DashboardScreen extends StatefulWidget {
@@ -15,44 +16,36 @@ class _DashboardScreenState extends State<DashboardScreen> {
       id: "1",
       title: "Design UI ToDo APP",
       description: "Design a simple home pages with clean layout and color based on the guidelines.",
-      date: "Friday, 08 July 2022",
-      category: "Teams",
-      progress: 0.78,
-      teamMembers: ["👨‍💻", "👩‍💻", "👨‍🎨", "👩‍🎨"],
-      completed: false,
-    ),
-    Task(
-      id: "2", 
-      title: "Weekly Report Meeting",
-      description: "Meet with the team to discuss project progress.",
-      date: "Friday, 08 July 2022",
-      category: "Teams",
-      progress: 0.45,
-      teamMembers: ["👨‍💼", "👩‍💼"],
-      completed: false,
+      date: DateTime(2012, 7, 8),
+      isCompleted: false,
+      completedAt: DateTime(2012, 7, 10)
     ),
   ];
 
   final List<Task> completedTasks = [
     Task(
+      id: "2",
+      title: "Meeting with Clients",
+      description: "Meeting with clients to discuss the project requirements and deliverables.",
+      date: DateTime(2012, 7, 8),
+      isCompleted: true,
+      completedAt: DateTime(2012, 7, 10)
+    ),
+    Task(
       id: "3",
-      title: "Meeting with Client",
-      description: "Redesign motion graphic.",
-      date: "Today 11:25 PM",
-      category: "Personal",
-      progress: 1.0,
-      teamMembers: ["👨‍💻", "👩‍💻"],
-      completed: true,
+      title: "Create Wireframe",
+      description: "Create wireframe for the new mobile application.",
+      date: DateTime(2012, 7, 8),
+      isCompleted: true,
+      completedAt: DateTime(2012, 7, 10)
     ),
     Task(
       id: "4",
-      title: "Task Explore NFT",
-      description: "Explore design mobile UI.",
-      date: "01 July 10:30 AM",
-      category: "Personal", 
-      progress: 1.0,
-      teamMembers: ["👨‍🎨", "👩‍🎨"],
-      completed: true,
+      title: "Fix Bugs",
+      description: "Fix bugs in the existing codebase and improve performance.",
+      date: DateTime(2012, 7, 8),
+      isCompleted: true,
+      completedAt: DateTime(2012, 7, 10)
     ),
   ];
 
@@ -239,11 +232,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
           'id': task.id,
           'title': task.title,
           'description': task.description,
-          'date': task.date,
-          'category': task.category,
-          'completed': task.completed,
-          'progress': task.progress,
-          'teamMembers': task.teamMembers,
+          'date': task.date.toIso8601String(),
         };
         context.goToViewTask(task.id, taskMap);
       },
@@ -294,7 +283,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
           const SizedBox(height: 8),
           
           Text(
-            task.date,
+            task.date.toIso8601String(),
             style: const TextStyle(
               color: Color(0xFF6E6E73),
               fontSize: 12,
@@ -324,13 +313,6 @@ class _DashboardScreenState extends State<DashboardScreen> {
                   fontSize: 12,
                 ),
               ),
-              const SizedBox(width: 8),
-              ...task.teamMembers.take(4).map(
-                (member) => Container(
-                  margin: const EdgeInsets.only(right: 4),
-                  child: Text(member, style: const TextStyle(fontSize: 20)),
-                ),
-              ),
             ],
           ),
           
@@ -349,24 +331,10 @@ class _DashboardScreenState extends State<DashboardScreen> {
                         fontSize: 12,
                       ),
                     ),
-                    const SizedBox(height: 4),
-                    LinearProgressIndicator(
-                      value: task.progress,
-                      backgroundColor: const Color(0xFFF0F0F0),
-                      valueColor: const AlwaysStoppedAnimation<Color>(Color(0xFF007AFF)),
-                    ),
                   ],
                 ),
               ),
               const SizedBox(width: 16),
-              Text(
-                '${(task.progress * 100).toInt()}%',
-                style: const TextStyle(
-                  color: Color(0xFF1D1D1F),
-                  fontSize: 14,
-                  fontWeight: FontWeight.w600,
-                ),
-              ),
             ],
           ),
         ],
@@ -384,10 +352,6 @@ class _DashboardScreenState extends State<DashboardScreen> {
           'title': task.title,
           'description': task.description,
           'date': task.date,
-          'category': task.category,
-          'completed': task.completed,
-          'progress': task.progress,
-          'teamMembers': task.teamMembers,
         };
         context.goToViewTask(task.id, taskMap);
       },
@@ -407,16 +371,6 @@ class _DashboardScreenState extends State<DashboardScreen> {
       ),
       child: Row(
         children: [
-          Container(
-            width: 4,
-            height: 60,
-            decoration: BoxDecoration(
-              color: task.category == "Personal" ? const Color(0xFFFF6B6B) : const Color(0xFF4ECDC4),
-              borderRadius: BorderRadius.circular(2),
-            ),
-          ),
-          
-          const SizedBox(width: 16),
           
           Expanded(
             child: Column(
@@ -440,7 +394,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                 ),
                 const SizedBox(height: 8),
                 Text(
-                  task.date,
+                  task.date.toIso8601String(),
                   style: const TextStyle(
                     color: Color(0xFF6E6E73),
                     fontSize: 12,
@@ -448,16 +402,6 @@ class _DashboardScreenState extends State<DashboardScreen> {
                 ),
               ],
             ),
-          ),
-          
-          Row(
-            mainAxisSize: MainAxisSize.min,
-            children: task.teamMembers.take(2).map(
-              (member) => Container(
-                margin: const EdgeInsets.only(left: 4),
-                child: Text(member, style: const TextStyle(fontSize: 20)),
-              ),
-            ).toList(),
           ),
           
           const SizedBox(width: 12),
@@ -479,27 +423,4 @@ class _DashboardScreenState extends State<DashboardScreen> {
     ),
     );
   }
-}
-
-// Model class
-class Task {
-  final String id;
-  final String title;
-  final String description;
-  final String date;
-  final String category;
-  final double progress;
-  final List<String> teamMembers;
-  final bool completed;
-
-  Task({
-    required this.id,
-    required this.title,
-    required this.description,
-    required this.date,
-    required this.category,
-    required this.progress,
-    required this.teamMembers,
-    required this.completed,
-  });
 }

@@ -15,6 +15,7 @@ final class TaskApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp.router(
       title: 'Task App',
+      themeMode: ThemeMode.system,
       routerConfig: router(),
     );
   }

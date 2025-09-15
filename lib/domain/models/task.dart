@@ -9,7 +9,7 @@ final class Task {
   final String title;
   final String description;
   final bool isCompleted;
-  final DateTime createdAt;
+  final DateTime date;
   final DateTime? completedAt;
 
   const Task({
@@ -17,7 +17,7 @@ final class Task {
     required this.title,
     required this.description,
     required this.isCompleted,
-    required this.createdAt,
+    required this.date,
     this.completedAt,
   });
 
@@ -27,7 +27,7 @@ final class Task {
       title: json['title'] ?? '',
       description: json['description'] ?? '',
       isCompleted: json['is_completed'] ?? false,
-      createdAt: DateTime.parse(json['created_at'] ?? DateTime.now().toString()),
+      date: DateTime.parse(json['created_at'] ?? DateTime.now().toString()),
       completedAt: json['completed_at'] != null
           ? DateTime.parse(json['completed_at'])
           : null,
@@ -40,7 +40,7 @@ final class Task {
       'title': title,
       'description': description,
       'is_completed': isCompleted,
-      'created_at': createdAt.toIso8601String(),
+      'created_at': date.toIso8601String(),
       'completed_at': completedAt?.toIso8601String(),
     };
   }
@@ -59,7 +59,7 @@ final class Task {
       title: title ?? this.title,
       description: description ?? this.description,
       isCompleted: isCompleted ?? this.isCompleted,
-      createdAt: createdAt ?? this.createdAt,
+      date: createdAt ?? this.date,
       completedAt: completedAt ?? this.completedAt,
     );
   }
@@ -71,7 +71,7 @@ final class Task {
         'title: $title, '
         'description: $description, '
         'isCompleted: $isCompleted, '
-        'createdAt: $createdAt, '
+        'createdAt: $date, '
         'completedAt: $completedAt'
         ')';
   }

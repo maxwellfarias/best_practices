@@ -297,7 +297,7 @@ class _TaskDetailScreenState extends State<TaskDetailScreen> {
           // Data de criação
           _buildDateRow(
             'Criada em',
-            _formatDateTime(_currentTask.createdAt),
+            _formatDateTime(_currentTask.date),
             Icons.add_circle_outline_rounded,
             Colors.blue,
           ),

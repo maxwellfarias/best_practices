@@ -150,7 +150,7 @@ void main() {
           title: 'New Task',
           description: 'New Description',
           isCompleted: false,
-          createdAt: DateTime.parse('2023-01-01T00:00:00Z'),
+          date: DateTime.parse('2023-01-01T00:00:00Z'),
         );
 
         when(() => mockApiClient.request(
@@ -181,7 +181,7 @@ void main() {
           title: 'New Task',
           description: 'New Description',
           isCompleted: false,
-          createdAt: DateTime.parse('2023-01-01T00:00:00Z'),
+          date: DateTime.parse('2023-01-01T00:00:00Z'),
         );
 
         when(() => mockApiClient.request(
@@ -209,7 +209,7 @@ void main() {
           title: 'New Task',
           description: 'New Description',
           isCompleted: false,
-          createdAt: DateTime.parse('2023-01-01T00:00:00Z'),
+          date: DateTime.parse('2023-01-01T00:00:00Z'),
         );
 
         when(() => mockApiClient.request(
@@ -239,7 +239,7 @@ void main() {
           title: 'Updated Task',
           description: 'Updated Description',
           isCompleted: true,
-          createdAt: DateTime.parse('2023-01-01T00:00:00Z'),
+          date: DateTime.parse('2023-01-01T00:00:00Z'),
           completedAt: DateTime.parse('2023-01-02T00:00:00Z'),
         );
 
@@ -271,7 +271,7 @@ void main() {
           title: 'Updated Task',
           description: 'Updated Description',
           isCompleted: true,
-          createdAt: DateTime.parse('2023-01-01T00:00:00Z'),
+          date: DateTime.parse('2023-01-01T00:00:00Z'),
         );
 
         when(() => mockApiClient.request(
@@ -299,7 +299,7 @@ void main() {
           title: 'Updated Task',
           description: 'Updated Description',
           isCompleted: true,
-          createdAt: DateTime.parse('2023-01-01T00:00:00Z'),
+          date: DateTime.parse('2023-01-01T00:00:00Z'),
         );
 
         when(() => mockApiClient.request(
@@ -417,7 +417,7 @@ void main() {
           title: 'Test Task',
           description: 'Test Description',
           isCompleted: false,
-          createdAt: DateTime.parse('2023-01-01T00:00:00Z'),
+          date: DateTime.parse('2023-01-01T00:00:00Z'),
         );
 
         when(() => mockApiClient.request(
@@ -506,7 +506,7 @@ void main() {
           title: 'Test',
           description: 'Test',
           isCompleted: false,
-          createdAt: DateTime.parse('2023-01-01T00:00:00Z'),
+          date: DateTime.parse('2023-01-01T00:00:00Z'),
         );
 
         // Act

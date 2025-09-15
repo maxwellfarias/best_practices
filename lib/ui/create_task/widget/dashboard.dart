@@ -20,6 +20,22 @@ class _DashboardScreenState extends State<DashboardScreen> {
       isCompleted: false,
       completedAt: DateTime(2012, 7, 10)
     ),
+    Task(
+      id: "2",
+      title: "Design UI ToDo APP",
+      description: "Design a simple home pages with clean layout and color based on the guidelines.",
+      date: DateTime(2012, 7, 8),
+      isCompleted: false,
+      completedAt: DateTime(2012, 7, 10)
+    ),
+    Task(
+      id: "3",
+      title: "Design UI ToDo APP",
+      description: "Design a simple home pages with clean layout and color based on the guidelines.",
+      date: DateTime(2012, 7, 8),
+      isCompleted: false,
+      completedAt: DateTime(2012, 7, 10)
+    ),
   ];
 
   final List<Task> completedTasks = [
@@ -301,42 +317,6 @@ class _DashboardScreenState extends State<DashboardScreen> {
             maxLines: 2,
             overflow: TextOverflow.ellipsis,
           ),
-          
-          const SizedBox(height: 16),
-          
-          Row(
-            children: [
-              const Text(
-                'Teams :',
-                style: TextStyle(
-                  color: Color(0xFF6E6E73),
-                  fontSize: 12,
-                ),
-              ),
-            ],
-          ),
-          
-          const SizedBox(height: 16),
-          
-          Row(
-            children: [
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    const Text(
-                      'Progress :',
-                      style: TextStyle(
-                        color: Color(0xFF6E6E73),
-                        fontSize: 12,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              const SizedBox(width: 16),
-            ],
-          ),
         ],
       ),
     ),
@@ -371,6 +351,16 @@ class _DashboardScreenState extends State<DashboardScreen> {
       ),
       child: Row(
         children: [
+             Container(
+            width: 4,
+            height: 60,
+            decoration: BoxDecoration(
+              color: true ? const Color(0xFFFF6B6B) : const Color(0xFF4ECDC4),
+              borderRadius: BorderRadius.circular(2),
+            ),
+          ),
+          
+          const SizedBox(width: 16),
           
           Expanded(
             child: Column(

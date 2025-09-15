@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mastering_tests/config/dependencies.dart';
 import 'package:mastering_tests/routing/router.dart';
+import 'package:mastering_tests/ui/core/themes/theme.dart';
 import 'package:provider/provider.dart';
 
 void main() {
@@ -16,6 +17,8 @@ final class TaskApp extends StatelessWidget {
     return MaterialApp.router(
       title: 'Task App',
       themeMode: ThemeMode.system,
+      theme: AppTheme.lightTheme,
+      darkTheme: AppTheme.darkTheme,
       routerConfig: router(),
     );
   }

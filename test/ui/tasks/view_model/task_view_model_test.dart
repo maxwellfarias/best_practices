@@ -23,7 +23,7 @@ void main() {
     title: 'Test Task',
     description: 'Test Description',
     isCompleted: false,
-    createdAt: DateTime(2025, 9, 13),
+    date: DateTime(2025, 9, 13),
   );
   
   final testTasks = [
@@ -33,7 +33,7 @@ void main() {
       title: 'Test Task 2',
       description: 'Test Description 2',
       isCompleted: true,
-      createdAt: DateTime(2025, 9, 12),
+      date: DateTime(2025, 9, 12),
       completedAt: DateTime(2025, 9, 13),
     ),
   ];
@@ -49,7 +49,7 @@ void main() {
         title: 'Fallback Task',
         description: 'Fallback Description',
         isCompleted: false,
-        createdAt: DateTime.now(),
+        date: DateTime.now(),
       ),
     );
   });

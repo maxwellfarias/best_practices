@@ -86,7 +86,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
       ),
       body: SafeArea(
         child: Padding(
-          padding: const EdgeInsets.all(20.0),
+          padding: const EdgeInsets.symmetric(horizontal: 16),
           child: ListView(
             children: [
               // On Progress Section
@@ -111,7 +111,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
 
               // On Progress Tasks
               SizedBox(
-                height: 200,
+                height: 226,
                 child: ListView.builder(
                   scrollDirection: Axis.horizontal,
                   itemCount: onProgressTasks.length,
@@ -185,31 +185,13 @@ class _DashboardScreenState extends State<DashboardScreen> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Row(
-            children: [
-              Expanded(
-                child: Text(
-                  task.title,
-                  style: context.customTextTheme.textLgSemibold,
-                  ),
-                ),
-                Container(
-                  padding: EdgeInsets.symmetric(horizontal: 4, vertical: 2),
-                  decoration: BoxDecoration(
-                    color: Colors.redAccent.withValues(alpha: 0.1),
-                    borderRadius: BorderRadius.circular(4),
-                  ),
-                  child: Text(
-                    "Alta",
-                    style: context.customTextTheme.textSm.copyWith(
-                      color: Colors.red[600],
-                    ),
-                  ),
-                ),
-              ],
+          Text(
+            task.title,
+            style: context.customTextTheme.textLgSemibold,
+            overflow: TextOverflow.ellipsis,
           ),
-          const SizedBox(height: 8),
 
+          const SizedBox(height: 8),
           
           Text(
             task.date.toBrString(),
@@ -218,9 +200,25 @@ class _DashboardScreenState extends State<DashboardScreen> {
             ),
           ),
 
-          const SizedBox(height: 16),
-          
-          Text(
+            const SizedBox(height: 4),
+
+            Container(
+              padding: EdgeInsets.symmetric(horizontal: 14, vertical: 2),
+              decoration: BoxDecoration(
+                color: Colors.red,
+                borderRadius: BorderRadius.circular(4),
+              ),
+              child: Text(
+                "Alta",
+                style: context.customTextTheme.textXsBold.copyWith(
+                  color: Colors.white,
+                ),
+              ),
+            ),
+
+            SizedBox(height: 16),
+
+            Text(
             task.description,
             style: context.customTextTheme.textMd.copyWith(
               color: context.customColorTheme.textTertiary,

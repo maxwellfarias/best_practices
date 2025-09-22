@@ -15,19 +15,20 @@ class _TodoListScreenState extends State<TodoListScreen> {
   @override
   void initState() {
     super.initState();
-    widget.viewModel.addListener(_onViewModelChanged);
-    // Carregar as tarefas ao inicializar
+    widget.viewModel.getTaskBy.addListener(_onGetTaskByChanged);
+    widget.viewModel.updateTask.addListener(_onUpdateTaskChanged);
+    widget.viewModel.deleteTask.addListener(_onDeleteTaskChanged);
+    widget.viewModel.createTask.addListener(_onCreateTaskChanged);
     widget.viewModel.getAllTasks.execute();
   }
 
   @override
   void dispose() {
-    widget.viewModel.removeListener(_onViewModelChanged);
+    widget.viewModel.getTaskBy.removeListener(_onGetTaskByChanged);
+    widget.viewModel.updateTask.removeListener(_onUpdateTaskChanged);
+    widget.viewModel.deleteTask.removeListener(_onDeleteTaskChanged);
+    widget.viewModel.createTask.removeListener(_onCreateTaskChanged);
     super.dispose();
-  }
-
-  void _onViewModelChanged() {
-    setState(() {});
   }
 
   @override
@@ -64,8 +65,6 @@ class _TodoListScreenState extends State<TodoListScreen> {
 
           return Column(
             children: [
-              // Status de loading
-
               // Lista de tarefas
               Expanded(
                 child: widget.viewModel.tasks.isEmpty
@@ -222,6 +221,72 @@ class _TodoListScreenState extends State<TodoListScreen> {
     );
   }
 
+  
+  void _onGetTaskByChanged() {
+    if(widget.viewModel.getTaskBy.error) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('Erro ao carregar tarefa: ${widget.viewModel.getTaskBy.error}'),
+          backgroundColor: Colors.red,
+        ),
+      );
+    }
+  }
+
+  void _onCreateTaskChanged() {
+    if(widget.viewModel.createTask.error) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('Erro ao carregar tarefa: ${widget.viewModel.createTask.error}'),
+          backgroundColor: Colors.red,
+        ),
+      );
+    } else if (widget.viewModel.createTask.completed) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('Tarefa criada com sucesso!'),
+          backgroundColor: Colors.green,
+        ),
+      );
+    }
+  }
+
+  void _onUpdateTaskChanged() {
+    if(widget.viewModel.updateTask.error) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('Erro ao carregar tarefa: ${widget.viewModel.updateTask.error}'),
+          backgroundColor: Colors.red,
+        ),
+      );
+    } else if (widget.viewModel.updateTask.completed) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('Tarefa atualizada com sucesso!'),
+          backgroundColor: Colors.green,
+        ),
+      );
+    }
+  }
+
+  void _onDeleteTaskChanged() {
+    if(widget.viewModel.deleteTask.error) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('Erro ao carregar tarefa: ${widget.viewModel.deleteTask.error}'),
+          backgroundColor: Colors.red,
+        ),
+      );
+    } else if (widget.viewModel.deleteTask.completed) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('Tarefa excluída com sucesso!'),
+          backgroundColor: Colors.green,
+        ),
+      );
+    }
+  }
+
   String _formatDate(DateTime date) {
     return '${date.day}/${date.month}/${date.year} ${date.hour}:${date.minute.toString().padLeft(2, '0')}';
   }
@@ -249,11 +314,9 @@ class _TaskDialogState extends State<_TaskDialog> {
 
   @override
   void initState() {
-    super.initState();
+    super.initState();    //Controllers
     _titleController = TextEditingController(text: widget.initialTitle ?? '');
-    _descriptionController = TextEditingController(
-      text: widget.initialDescription ?? '',
-    );
+    _descriptionController = TextEditingController(text: widget.initialDescription ?? '');
   }
 
   @override

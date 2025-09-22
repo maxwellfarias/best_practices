@@ -5,8 +5,7 @@ import 'package:mastering_tests/utils/mocks/task_mock.dart';
 import '../../utils/result.dart';
 import 'task_repository.dart';
 
-const apiKey =
-    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImRxc2Jwc2lmZHl1amJidmJ6amRxIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTY3MDI0MDUsImV4cCI6MjA3MjI3ODQwNX0.lW-mzhw2eB5CbT_hNFNeYAVNOcEqOGiibgeNR4L4Pck";
+const apiKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImRxc2Jwc2lmZHl1amJidmJ6amRxIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTY3MDI0MDUsImV4cCI6MjA3MjI3ODQwNX0.lW-mzhw2eB5CbT_hNFNeYAVNOcEqOGiibgeNR4L4Pck";
 
 class TaskRepositoryImpl implements TaskRepository {
   final ApiClient _apiService;
@@ -16,12 +15,12 @@ class TaskRepositoryImpl implements TaskRepository {
     
       @override
       Future<Result<TaskModel>> createTask({required String databaseId, required TaskModel task}) async {
-        return Result.ok(TaskMock.getMockTasks().first);
+        return Result.ok(TaskMock.addTask(task));
       }
     
       @override
-      Future<Result<TaskModel>> deleteTask({required String databaseId, required String taskId}) async {
-            return Result.ok(TaskMock.getMockTasks().first);
+      Future<Result<dynamic>> deleteTask({required String databaseId, required String taskId}) async {
+            return Result.ok(TaskMock.deleteTask(taskId));
       }
     
       @override
@@ -31,12 +30,12 @@ class TaskRepositoryImpl implements TaskRepository {
     
       @override
       Future<Result<TaskModel>> getTaskBy({required String databaseId, required String taskId}) async {
-        return Result.ok(TaskMock.getMockTasks().first);
+        return TaskMock.getTaskById(taskId);
       }
     
       @override
       Future<Result<TaskModel>> updateTask({required String databaseId, required TaskModel task}) async {
-        return Result.ok(TaskMock.getMockTasks().first);
+        return TaskMock.updateTask(task);
       }
 
 }

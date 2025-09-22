@@ -14,7 +14,7 @@ final class TaskViewModel extends ChangeNotifier {
   }
   final TaskRepository _taskRepository;
 
-  List<TaskModel> tasks = [];
+  final List<TaskModel> tasks = [];
   late final Command1<List<TaskModel>, String> getAllTasks; 
   late final Command1<TaskModel, String> getTaskBy; 
   late final Command1<TaskModel, TaskModel> createTask; 
@@ -24,14 +24,15 @@ final class TaskViewModel extends ChangeNotifier {
   Future<Result<List<TaskModel>>> _getAllTasks(String databaseId) async {
     return await _taskRepository.getAllTasks(databaseId: databaseId)
     .map((tasks) {
-      this.tasks = tasks;
+      this.tasks
+      ..clear()
+      ..addAll(tasks);
       notifyListeners();
       return tasks;
     });
   }
 
   Future<Result<TaskModel>> _getTaskBy(String taskId) async {
-    // Assumindo um databaseId padrão, pode ser ajustado conforme necessário
     return await _taskRepository.getTaskBy(databaseId: 'default', taskId: taskId);
   }
 

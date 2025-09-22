@@ -1,9 +1,27 @@
+import 'package:mastering_tests/exceptions/app_exception.dart';
+import 'package:mastering_tests/utils/result.dart';
+
 import '../../domain/models/task_model.dart';
 
 /// Classe utilitária para criar dados fictícios de TaskModel
 class TaskMock {
+  static List<TaskModel> _tasks = [];
+  
+  /// Inicializa a lista com dados fictícios na primeira chamada
+  static void _initializeIfEmpty() {
+    if (_tasks.isEmpty) {
+      _tasks = _generateInitialTasks();
+    }
+  }
+  
   /// Retorna uma lista de dados fictícios de TaskModel
   static List<TaskModel> getMockTasks() {
+    _initializeIfEmpty();
+    return List.from(_tasks);
+  }
+  
+  /// Gera os dados iniciais das tasks
+  static List<TaskModel> _generateInitialTasks() {
     final now = DateTime.now();
 
     return [
@@ -75,5 +93,53 @@ class TaskMock {
         completedAt: now.subtract(const Duration(days: 4, hours: 6)),
       ),
     ];
+  }
+  
+  /// Adiciona uma nova task à lista
+  static TaskModel addTask(TaskModel task) {
+    _initializeIfEmpty();
+    _tasks.add(task);
+    return task;
+  }
+  
+  /// Busca uma task específica pelo ID
+  static Result<TaskModel> getTaskById(String id) {
+    _initializeIfEmpty();
+    try {
+      final resposta = _tasks.firstWhere((task) => task.id == id);
+      return Result.ok(resposta);
+    } catch (e) {
+      return Result.error(ErroInternoServidorException());
+    }
+  }
+  
+  /// Atualiza uma task existente
+  static Result<TaskModel> updateTask(TaskModel updatedTask) {
+    _initializeIfEmpty();
+    final index = _tasks.indexWhere((task) => task.id == updatedTask.id);
+    if (index != -1) {
+      _tasks[index] = updatedTask;
+      return Result.ok(updatedTask);
+    }
+    return Result.error(ErroInternoServidorException());
+  }
+  
+  /// Remove uma task da lista pelo ID
+  static bool deleteTask(String id) {
+    _initializeIfEmpty();
+    final initialLength = _tasks.length;
+    _tasks.removeWhere((task) => task.id == id);
+    return _tasks.length < initialLength;
+  }
+  
+  /// Limpa todas as tasks (útil para testes)
+  static void clearAllTasks() {
+    _tasks.clear();
+  }
+  
+  /// Redefine as tasks para o estado inicial
+  static void resetToInitialState() {
+    _tasks.clear();
+    _initializeIfEmpty();
   }
 }

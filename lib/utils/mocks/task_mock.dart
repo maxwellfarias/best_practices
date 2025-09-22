@@ -96,10 +96,10 @@ class TaskMock {
   }
   
   /// Adiciona uma nova task à lista
-  static TaskModel addTask(TaskModel task) {
+  static Result<TaskModel> addTask(TaskModel task) {
     _initializeIfEmpty();
     _tasks.add(task);
-    return task;
+    return Result.ok(task);
   }
   
   /// Busca uma task específica pelo ID
@@ -125,11 +125,11 @@ class TaskMock {
   }
   
   /// Remove uma task da lista pelo ID
-  static bool deleteTask(String id) {
+  static Result<bool> deleteTask(String id) {
     _initializeIfEmpty();
     final initialLength = _tasks.length;
     _tasks.removeWhere((task) => task.id == id);
-    return _tasks.length < initialLength;
+    return _tasks.length < initialLength ? Result.ok(true) : Result.error(ErroInternoServidorException());
   }
   
   /// Limpa todas as tasks (útil para testes)

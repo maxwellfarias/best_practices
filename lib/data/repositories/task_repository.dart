@@ -9,7 +9,7 @@ abstract interface class TaskRepository {
   Future<Result<TaskModel>> getTaskBy({required String databaseId, required String taskId});
   Future<Result<TaskModel>> createTask({required String databaseId, required TaskModel task});
   Future<Result<TaskModel>> updateTask({required String databaseId, required TaskModel task});
-  Future<Result<TaskModel>> deleteTask({required String databaseId, required String taskId});
+  Future<Result<dynamic>> deleteTask({required String databaseId, required String taskId});
 }
 
 

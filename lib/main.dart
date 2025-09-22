@@ -1,27 +1,25 @@
 import 'package:flutter/material.dart';
 import 'package:mastering_tests/config/dependencies.dart';
 import 'package:mastering_tests/routing/router.dart';
+import 'package:mastering_tests/ui/core/themes/theme.dart';
 import 'package:provider/provider.dart';
 
-
 void main() {
-  runApp( MultiProvider(providers: providers, child: MyApp()));
+  runApp( MultiProvider(providers: providers, child: TaskApp()));
 }
 
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+
+final class TaskApp extends StatelessWidget {
+  const TaskApp({super.key});
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp.router(
-      title: 'Todo App',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-        fontFamily: 'Spline Sans',
-        useMaterial3: true,
-      ),
+      title: 'Task App',
+      themeMode: ThemeMode.system,
+      theme: AppTheme.lightTheme,
+      darkTheme: AppTheme.darkTheme,
       routerConfig: router(),
-      debugShowCheckedModeBanner: false,
     );
   }
 }

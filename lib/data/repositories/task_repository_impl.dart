@@ -1,8 +1,8 @@
 import 'dart:async';
+import 'package:mastering_tests/data/services/api/api_serivce.dart';
 import 'package:mastering_tests/domain/models/task_model.dart';
 import 'package:mastering_tests/utils/mocks/task_mock.dart';
 import '../../utils/result.dart';
-import '../services/api/api_service.dart';
 import 'task_repository.dart';
 
 const apiKey =

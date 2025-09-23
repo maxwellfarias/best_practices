@@ -1,7 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:mastering_tests/ui/core/extensions/color_extension.dart';
+import 'package:mastering_tests/ui/core/extensions/new_color_extension.dart';
 import 'package:mastering_tests/ui/core/themes/custom_text_style.dart';
+import 'package:mastering_tests/ui/core/themes/new_colors.dart';
 import 'colors.dart';
 
 abstract final class AppTheme {
@@ -126,7 +128,7 @@ static final _textTheme = TextTheme(
       ),
     ),
        
-    extensions: [AppColorTheme()]
+    extensions: [NewAppColorTheme()]
   );
 
 //MARK: ThemeData Dark
@@ -210,6 +212,44 @@ static final _textTheme = TextTheme(
     ),
 
     extensions: [
+      NewAppColorTheme(
+        background: NewAppColors.backgroundDark,
+        foreground: NewAppColors.foregroundDark,
+        primary: NewAppColors.primaryDark,
+        primaryForeground: NewAppColors.primaryForegroundDark,
+        primaryLight: NewAppColors.primaryLightDark,
+        primaryShade: NewAppColors.primaryShadeDark,
+        success: NewAppColors.successDark,
+        successForeground: NewAppColors.successForegroundDark,
+        successLight: NewAppColors.successLightDark,
+        warning: NewAppColors.warningDark,
+        warningForeground: NewAppColors.warningForegroundDark,
+        destructive: NewAppColors.destructiveDark,
+        destructiveForeground: NewAppColors.destructiveForegroundDark,
+        card: NewAppColors.cardDark,
+        cardForeground: NewAppColors.cardForegroundDark,
+        popover: NewAppColors.popoverDark,
+        popoverForeground: NewAppColors.popoverForegroundDark,
+        secondary: NewAppColors.secondaryDark,
+        secondaryForeground: NewAppColors.secondaryForegroundDark,
+        muted: NewAppColors.mutedDark,
+        mutedForeground: NewAppColors.mutedForegroundDark,
+        accent: NewAppColors.accentDark,
+        accentForeground: NewAppColors.accentForegroundDark,
+        border: NewAppColors.borderDark,
+        input: NewAppColors.inputDark,
+        ring: NewAppColors.ringDark,
+        sidebarBackground: NewAppColors.sidebarBackgroundDark,
+        sidebarForeground: NewAppColors.sidebarForegroundDark,
+        sidebarPrimary: NewAppColors.sidebarPrimaryDark,
+        sidebarPrimaryForeground: NewAppColors.sidebarPrimaryForegroundDark,
+        sidebarAccent: NewAppColors.sidebarAccentDark,
+        sidebarAccentForeground: NewAppColors.sidebarAccentForegroundDark,
+        sidebarBorder: NewAppColors.sidebarBorderDark,
+        sidebarRing: NewAppColors.sidebarRingDark,
+        shadowElegant: NewAppColors.shadowElegantDark,
+        shadowCard: NewAppColors.shadowCardDark,
+      ),
       AppColorTheme(
         primaryActive: AppColors.brand600,
         grey300: AppColors.grey300Dark,

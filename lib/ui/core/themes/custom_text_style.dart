@@ -2,69 +2,37 @@ import 'package:flutter/material.dart';
 
 @immutable
 class CustomTextTheme {
-  ///fontFamily: 'Inter', fontWeight: FontWeight.w400, fontSize: 36, height: 44 / 36
   final TextStyle displayMd;
-  ///fontFamily: 'Inter', fontWeight: FontWeight.w500, fontSize: 36, height: 44 / 36
   final TextStyle displayMdMedium;
-  ///fontFamily: 'Inter', fontWeight: FontWeight.w600, fontSize: 36, height: 44 / 36
   final TextStyle displayMdSemibold;
-  ///fontFamily: 'Inter', fontWeight: FontWeight.bold, fontSize: 36, height: 44 / 36
   final TextStyle displayMdBold;
-  ///fontFamily: 'Inter', fontWeight: FontWeight.w400, fontSize: 30, height: 38 / 30
   final TextStyle displaySm;
-  ///fontFamily: 'Inter', fontWeight: FontWeight.w500, fontSize: 30, height: 38 / 30
   final TextStyle displaySmMedium;
-  ///fontFamily: 'Inter', fontWeight: FontWeight.w600, fontSize: 30, height: 38 / 30
   final TextStyle displaySmSemibold;
-  ///fontFamily: 'Inter', fontWeight: FontWeight.bold, fontSize: 30, height: 38 / 30
   final TextStyle displaySmBold;
-  ///fontFamily: 'Inter', fontWeight: FontWeight.w400, fontSize: 24, height: 32 / 24
   final TextStyle displayXs;
-  ///fontFamily: 'Inter', fontWeight: FontWeight.w500, fontSize: 24, height: 32 / 24
   final TextStyle displayXsMedium;
-  ///fontFamily: 'Inter', fontWeight: FontWeight.w600, fontSize: 24, height: 32 / 24
   final TextStyle displayXsSemibold;
-  ///fontFamily: 'Inter', fontWeight: FontWeight.bold, fontSize: 24, height: 32 / 24
   final TextStyle displayXsBold;
-  ///fontFamily: 'Inter', fontWeight: FontWeight.w400, fontSize: 20, height: 30 / 20
   final TextStyle textXl;
-  ///fontFamily: 'Inter', fontWeight: FontWeight.w500, fontSize: 20, height: 30 / 20
   final TextStyle textXlMedium;
-  ///fontFamily: 'Inter', fontWeight: FontWeight.w600, fontSize: 20, height: 30 / 20
   final TextStyle textXlSemibold;
-  ///fontFamily: 'Inter', fontWeight: FontWeight.bold, fontSize: 20, height: 30 / 20
   final TextStyle textXlBold;
-  ///fontFamily: 'Inter', fontWeight: FontWeight.w400, fontSize: 18, height: 28 / 18
   final TextStyle textLg;
-  ///fontFamily: 'Inter', fontWeight: FontWeight.w500, fontSize: 18, height: 28 / 18
   final TextStyle textLgMedium;
-  ///fontFamily: 'Inter', fontWeight: FontWeight.w600, fontSize: 18, height: 28 / 18
   final TextStyle textLgSemibold;
-  ///fontFamily: 'Inter', fontWeight: FontWeight.bold, fontSize: 18, height: 28 / 18
   final TextStyle textLgBold;
-  ///fontFamily: 'Inter', fontWeight: FontWeight.w400, fontSize: 16, height: 24 / 16
   final TextStyle textMd;
-  ///fontFamily: 'Inter', fontWeight: FontWeight.w500, fontSize: 16, height: 24 / 16
   final TextStyle textMdMedium;
-  ///fontFamily: 'Inter', fontWeight: FontWeight.w600, fontSize: 16, height: 24 / 16
   final TextStyle textMdSemibold;
-  ///fontFamily: 'Inter', fontWeight: FontWeight.bold, fontSize: 16, height: 24 / 16
   final TextStyle textMdBold;
-  ///fontFamily: 'Inter', fontWeight: FontWeight.w400, fontSize: 14, height: 20 / 14
   final TextStyle textSm;
-  ///fontFamily: 'Inter', fontWeight: FontWeight.w500, fontSize: 14, height: 20 / 14
   final TextStyle textSmMedium;
-  ///fontFamily: 'Inter', fontWeight: FontWeight.w600, fontSize: 14, height: 20 / 14
   final TextStyle textSmSemibold;
-  ///fontFamily: 'Inter', fontWeight: FontWeight.bold, fontSize: 14, height: 20 / 14
   final TextStyle textSmBold;
-  ///fontFamily: 'Inter', fontWeight: FontWeight.w400, fontSize: 12, height: 18 / 12
   final TextStyle textXs;
-  ///fontFamily: 'Inter', fontWeight: FontWeight.w500, fontSize: 12, height: 18 / 12
   final TextStyle textXsMedium;
-  ///fontFamily: 'Inter', fontWeight: FontWeight.w600, fontSize: 12, height: 18 / 12
   final TextStyle textXsSemibold;
-  ///fontFamily: 'Inter', fontWeight: FontWeight.bold, fontSize: 12, height: 18 / 12
   final TextStyle textXsBold;
 
   const CustomTextTheme({
@@ -80,7 +48,6 @@ class CustomTextTheme {
     this.displayMdBold = const TextStyle(
       fontFamily: 'Inter', fontWeight: FontWeight.bold, fontSize: 36, height: 44 / 36,
     ),
-    
     this.displaySm = const TextStyle(
       fontFamily: 'Inter', fontWeight: FontWeight.w400, fontSize: 30, height: 38 / 30,
     ),

@@ -33,15 +33,15 @@
 
 | React Tailwind Class | Tamanho | Peso | Flutter Equivalent |
 |---------------------|---------|------|-------------------|
-| `text-4xl font-bold` | 36px | 700 | `context.customTextTheme.displayMdBold` |
-| `text-3xl font-bold` | 30px | 700 | `context.customTextTheme.displaySmBold` |
-| `text-2xl font-bold` | 24px | 700 | `context.customTextTheme.displayXsBold` |
+| `text-4xl font-bold` | 36px | 700 | `context.customTextTheme.text4xlBold` |
+| `text-3xl font-bold` | 30px | 700 | `context.customTextTheme.text3xlBold` |
+| `text-2xl font-bold` | 24px | 700 | `context.customTextTheme.text2xlBold` |
 | `text-xl font-semibold` | 20px | 600 | `context.customTextTheme.textXlSemibold` |
 | `text-xl font-medium` | 20px | 500 | `context.customTextTheme.textXlMedium` |
 | `text-lg font-semibold` | 18px | 600 | `context.customTextTheme.textLgSemibold` |
 | `text-lg font-medium` | 18px | 500 | `context.customTextTheme.textLgMedium` |
-| `text-base font-medium` | 16px | 500 | `context.customTextTheme.textMdMedium` |
-| `text-base` | 16px | 400 | `context.customTextTheme.textMd` |
+| `text-base font-medium` | 16px | 500 | `context.customTextTheme.textBaseMedium` |
+| `text-base` | 16px | 400 | `context.customTextTheme.textBase` |
 | `text-sm font-semibold` | 14px | 600 | `context.customTextTheme.textSmSemibold` |
 | `text-sm font-medium` | 14px | 500 | `context.customTextTheme.textSmMedium` |
 | `text-sm` | 14px | 400 | `context.customTextTheme.textSm` |
@@ -214,14 +214,13 @@ Widget _buildResponsiveGrid(BuildContext context, List<Widget> items) {
 ### 📄 Estrutura de Arquivos
 ```
 lib/ui/{nome_tela}/
-├── models/
-│   └── {nome_tela}_models.dart
-├── widgets/
-│   ├── {nome_tela}.dart
-│   ├── {componente}_card.dart
-│   ├── {componente}_detail.dart
-│   └── {componente}_form.dart
-└── {nome_tela}_example.dart
+├── domain/models/
+│   └── {nome_tela}_model.dart         # Classes de dados e enums
+├── ui/{nome_tela}/widget/
+    ├── {nome_tela}.dart                # Widget principal
+    ├── {componente}_card.dart          # Cards específicos
+    ├── {componente}_detail.dart        # Modais de detalhes
+    └── {componente}_form.dart          # Formulários
 ```
 
 ### 🎯 Checklist de Qualidade

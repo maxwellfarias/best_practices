@@ -95,7 +95,7 @@ class _ExamplePageState extends State<ExamplePage> {
           ).createShader(bounds),
           child: Text(
             '{TITLE}', // TODO: Substituir pelo título real
-            style: context.customTextTheme.displaySmBold.copyWith(
+            style: context.customTextTheme.text3xlBold.copyWith(
               color: Colors.white,
             ),
           ),

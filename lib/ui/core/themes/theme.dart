@@ -77,7 +77,7 @@ static final _textTheme = TextTheme(
       enabledBorder: _border(AppColors.grey300),
       errorBorder: _border(AppColors.danger),
       errorStyle: _textTheme.bodySmall,
-      hintStyle: _customTextTheme.textMd.copyWith(color: AppColors.grey500),
+      hintStyle: _customTextTheme.textLg.copyWith(color: AppColors.grey500),
     ),
     cardTheme: CardThemeData(
       color: Colors.white,
@@ -171,7 +171,7 @@ static final _textTheme = TextTheme(
       enabledBorder: _border(AppColors.grey300Dark),
       errorBorder: _border(AppColors.dangerDark),
       errorStyle: TextStyle(color: AppColors.dangerDark),
-      hintStyle: _customTextTheme.textMd.copyWith(
+      hintStyle: _customTextTheme.textLg.copyWith(
         color: AppColors.grey400,
       ),
     ),

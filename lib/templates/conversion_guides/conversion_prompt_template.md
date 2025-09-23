@@ -14,18 +14,18 @@ Converta o código React anexado para Flutter mantendo:
 ## 📁 ARQUIVOS DE REFERÊNCIA ANEXADOS
 - [ ] **Código React**: `lovable/src/pages/{nome_da_pagina}.tsx` - Componente principal a ser convertido
 - [ ] **CSS/Styles**: `lovable/src/index.css` ou arquivo de estilos relevante
-- [ ] **Guia de Conversão**: `lib/react_to_flutter_guide.md` - Referência completa
-- [ ] **Extensões Flutter**: `build_context_extension.dart` - Extensões de contexto
-- [ ] **Tema Flutter**: `theme.dart` - Tema já configurado
-- [ ] **Cores**: `new_colors.dart` - Paleta de cores do projeto
-- [ ] **Tipografia**: `custom_text_style.dart` - Sistema tipográfico
+- [ ] **Guia de Conversão**: `lib/templates/conversion_guides/react_to_flutter_guide.md` - Referência completa
+- [ ] **Extensões Flutter**: `lib/ui/core/extensions/build_context_extension.dart` - Extensões de contexto
+- [ ] **Tema Flutter**: `lib/ui/core/themes/theme.dart` - Tema já configurado
+- [ ] **Cores**: `lib/ui/core/themes/new_colors.dart` - Paleta de cores do projeto
+- [ ] **Tipografia**: `lib/ui/core/themes/custom_text_style.dart` - Sistema tipográfico
 
 ## 🔧 REQUISITOS ESPECÍFICOS
 
 ### 1. 🏗️ Estrutura Flutter
 - [ ] **Widget Principal**: Criar `StatefulWidget` em `lib/ui/{nome_tela}/widget/{nome_arquivo}.dart`
 - [ ] **Widgets Auxiliares**: Organizar em arquivos separados para componentes complexos
-- [ ] **Modelos de Dados**: Criar classes em `lib/ui/{nome_tela}/models/{nome_arquivo}_models.dart`
+- [ ] **Modelos de Dados**: Criar classes em `lib/domain/models/{nome_arquivo}_model.dart`
 - [ ] **Gerenciamento de Estado**: Usar `setState` para estados locais
 - [ ] **Imports**: Organizar imports em ordem: Flutter, packages, projeto
 
@@ -87,14 +87,14 @@ Widget _buildResponsiveLayout(BuildContext context) {
 ### 📁 Estrutura de Arquivos
 ```
 lib/ui/{nome_tela}/
-├── models/
-│   └── {nome_tela}_models.dart         # Classes de dados e enums
-├── widget/
-│   ├── {nome_tela}.dart                # Widget principal
-│   ├── {componente}_card.dart          # Cards específicos
-│   ├── {componente}_detail.dart        # Modais de detalhes
-│   └── {componente}_form.dart          # Formulários
-└── {nome_tela}_example.dart            # Exemplo de uso e documentação
+├── domain/models/
+│   └── {nome_tela}_model.dart         # Classes de dados e enums
+├── ui/{nome_tela}/widget/
+    ├── {nome_tela}.dart                # Widget principal
+    ├── {componente}_card.dart          # Cards específicos
+    ├── {componente}_detail.dart        # Modais de detalhes
+    └── {componente}_form.dart          # Formulários
+
 ```
 
 ### 📝 Código Esperado

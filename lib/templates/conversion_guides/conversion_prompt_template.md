@@ -100,6 +100,10 @@ Criar classe mock com operações CRUD completas:
 - [ ] **clearAll{PLURAL}**: Limpa lista (para testes)
 - [ ] **resetToInitialState**: Restaura dados iniciais
 
+
+O modelo de referência para criar a classe mock encontra-se em `/lib/templates/flutter_templates/simple_mock_template.dart`.
+
+
 ```dart
 /// Classe utilitária para dados fictícios de {NOME_MODELO}Model
 class {NOME_MODELO}Mock {
@@ -124,7 +128,6 @@ class {NOME_MODELO}Mock {
     ];
   }
   
-  // Implementar métodos CRUD completos conforme template
 }
 ```
 

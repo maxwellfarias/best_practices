@@ -57,10 +57,53 @@ const MedicalDashboard = () => {
 - ✅ **Layout**: Como está organizado? (grid responsivo)
 - ✅ **Funcionalidades**: O que o usuário pode fazer? (ver, criar, editar)
 - ✅ **Estados**: Loading, erro, lista vazia?
+- ✅ **Componentes Importados**: Verificar TODOS os imports de @/components/ui/*
+- ✅ **Estilos**: Classes Tailwind e variáveis CSS utilizadas
 
 ---
 
-### 🏗️ **PASSO 2: Definir a Arquitetura**
+### � **PASSO 2.5: Analisar Estilos e Componentes**
+
+Antes de definir a arquitetura, analise cuidadosamente os estilos e componentes:
+
+#### **📝 Mapeamento de Tipografia**
+```tsx
+// React Tailwind → Flutter CustomTextTheme
+text-4xl font-bold     → context.customTextTheme.text4XlBold
+text-xl font-semibold  → context.customTextTheme.textXlSemibold
+text-base font-medium  → context.customTextTheme.textBaseMedium
+text-sm                → context.customTextTheme.textSm
+```
+
+#### **🎨 Mapeamento de Cores**
+```tsx
+// React CSS Variables → Flutter NewAppColorTheme  
+--primary              → context.customColorTheme.primary
+--background           → context.customColorTheme.background
+--card                 → context.customColorTheme.card
+--muted-foreground     → context.customColorTheme.mutedForeground
+```
+
+#### **📐 Mapeamento de Espaçamentos**
+```tsx
+// Tailwind → Flutter EdgeInsets
+p-4                    → EdgeInsets.all(16)
+px-6                   → EdgeInsets.symmetric(horizontal: 24)
+py-2                   → EdgeInsets.symmetric(vertical: 8)
+pt-4 pb-2              → EdgeInsets.only(top: 16, bottom: 8)
+```
+
+#### **🧩 Componentes Importados**
+```tsx
+// Sempre verificar TODOS os imports:
+import { Button } from "@/components/ui/button";           → ElevatedButton/OutlinedButton
+import { Card, CardContent } from "@/components/ui/card";  → Card widget
+import { Dialog } from "@/components/ui/dialog";           → showDialog()
+import { Form } from "@/components/ui/form";               → Form widget
+import { Select } from "@/components/ui/select";           → DropdownButtonFormField
+```
+
+**⚠️ ATENÇÃO**: Não ignore os componentes importados! Eles são essenciais para a renderização completa.
 
 Com base na análise, defina os nomes para a arquitetura:
 
@@ -91,7 +134,7 @@ lib/
 
 ---
 
-### 📝 **PASSO 3: Preparar o Prompt**
+### 🏗️ **PASSO 3: Definir a Arquitetura**
 
 Abra o arquivo `lib/templates/conversion_guides/conversion_prompt_template.md` e localize a seção **"PROMPT FINAL PARA USO"**.
 
@@ -113,14 +156,14 @@ Converta o componente React MedicalDashboard para Flutter...
 
 ---
 
-### 🤖 **PASSO 4: Usar o Prompt no GitHub Copilot**
+### 📝 **PASSO 4: Preparar o Prompt**
 
-#### 4.1 Abrir o Modo Agente
+#### 5.1 Abrir o Modo Agente
 1. Pressione `Ctrl+Shift+P` (ou `Cmd+Shift+P` no Mac)
 2. Digite: `GitHub Copilot: Open Chat`
 3. Ou use o atalho: `Ctrl+Alt+I`
 
-#### 4.2 Anexar Arquivos Necessários
+#### 5.2 Anexar Arquivos Necessários
 No chat do Copilot, anexe os seguintes arquivos:
 
 ```
@@ -130,9 +173,10 @@ No chat do Copilot, anexe os seguintes arquivos:
 @lib/utils/result.dart
 @lib/utils/command.dart
 @lib/ui/core/themes/theme.dart
+@lib/ui/core/extensions/build_context_extension.dart
 ```
 
-#### 4.3 Colar o Prompt Preenchido
+#### 5.3 Colar o Prompt Preenchido
 Cole o prompt com as variáveis substituídas:
 
 ```
@@ -164,17 +208,19 @@ Converta o componente React MedicalDashboard para Flutter seguindo a arquitetura
 - Estados loading/error/empty/success
 - Feedback visual com SnackBars
 - Formulários com validação
+- Conversão fiel de estilos usando CustomTextTheme e NewAppColorTheme
+- Todos os componentes importados devem ser considerados na conversão
+
+**IMPORTANTE**: Analisar TODOS os imports do arquivo React, incluindo componentes de @/components/ui/*, pois estes são essenciais para a renderização completa da página.
 
 Implemente seguindo exatamente o template de conversão anexado.
 ```
 
 ---
 
-### ✅ **PASSO 5: Validar o Resultado**
+### 🤖 **PASSO 5: Usar o Prompt no GitHub Copilot**
 
-O Copilot irá gerar os 6 arquivos. Valide cada um:
-
-#### 🔍 **5.1 Domain Model** (`patient_model.dart`)
+#### 5.1 Abrir o Modo Agente
 ```dart
 // ✅ Verificar se tem:
 - Constructor com required/optional
@@ -237,15 +283,82 @@ O Copilot irá gerar os 6 arquivos. Valide cada um:
 
 ---
 
-### 🔧 **PASSO 6: Testar e Integrar**
+### ✅ **PASSO 6: Validar o Resultado**
 
-#### 6.1 Compilar o Código
+O Copilot irá gerar os 6 arquivos. Valide cada um:
+
+#### 🔍 **6.1 Domain Model** (`patient_model.dart`)
+```dart
+// ✅ Verificar se tem:
+- Constructor com required/optional
+- factory fromJson(dynamic json)
+- Map<String, dynamic> toJson()
+- copyWith({...})
+- toString() override
+```
+
+#### 🔍 **6.2 Mock Data** (`patient_mock.dart`)
+```dart
+// ✅ Verificar se tem:
+- Lista privada estática
+- getMockPatients() com Future.delayed
+- addPatient, getPatientById, updatePatient, deletePatient
+- clearAllPatients, resetToInitialState
+- 6-8 itens mock realistas
+```
+
+#### 🔍 **6.3 Repository Interface** (`patient_repository.dart`)
+```dart
+// ✅ Verificar se tem os 5 métodos:
+- Future<Result<List<PatientModel>>> getAllPatients({required String databaseId})
+- Future<Result<PatientModel>> getPatientBy({required String databaseId, required String patientId})
+- Future<Result<PatientModel>> createPatient({required String databaseId, required PatientModel patient})
+- Future<Result<PatientModel>> updatePatient({required String databaseId, required PatientModel patient})
+- Future<Result<dynamic>> deletePatient({required String databaseId, required String patientId})
+```
+
+#### 🔍 **6.4 Repository Implementation** (`patient_repository_impl.dart`)
+```dart
+// ✅ Verificar se:
+- Implementa a interface
+- Todos os métodos delegam para PatientMock
+- Usa Result.ok() e Result.error()
+```
+
+#### 🔍 **6.5 ViewModel** (`medical_dashboard_viewmodel.dart`)
+```dart
+// ✅ Verificar se tem:
+- Constructor com repository injection
+- 5 Commands: getAllPatients, getPatientBy, createPatient, updatePatient, deletePatient
+- Lista privada _patients e getter público patients
+- Métodos privados com notifyListeners()
+- extends ChangeNotifier
+```
+
+#### 🔍 **6.6 UI Screen** (`medical_dashboard_screen.dart`)
+```dart
+// ✅ Verificar se tem:
+- initState com 3 listeners (create, update, delete) + execute getAll
+- dispose com removeListener
+- _onResult com SnackBar para feedback
+- ListenableBuilder com Listenable.merge
+- Estados: loading (CupertinoActivityIndicator), error, empty, success
+- Layout responsivo com LayoutBuilder
+- FloatingActionButton para criar
+- Métodos CRUD funcionais
+- Uso correto de CustomTextTheme e NewAppColorTheme
+- Conversão fiel dos componentes React importados
+```
+
+---
+
+#### 7.1 Compilar o Código
 ```bash
 flutter pub get
 flutter analyze
 ```
 
-#### 6.2 Integrar na Navegação
+#### 7.2 Integrar na Navegação
 Adicione a tela ao sistema de rotas do projeto:
 
 ```dart
@@ -257,7 +370,7 @@ Adicione a tela ao sistema de rotas do projeto:
 ),
 ```
 
-#### 6.3 Testar Funcionalidades
+#### 7.3 Testar Funcionalidades
 - ✅ Carregamento inicial (loading 2s)
 - ✅ Lista de pacientes exibida
 - ✅ Responsividade (mobile/tablet/desktop)
@@ -266,6 +379,8 @@ Adicione a tela ao sistema de rotas do projeto:
 - ✅ Deletar paciente
 - ✅ Feedback visual (SnackBars)
 - ✅ Estados de erro
+- ✅ Estilos fiéis ao React (tipografia, cores, espaçamentos)
+- ✅ Todos os componentes funcionando
 
 ---
 
@@ -329,6 +444,24 @@ Layout: Tabela responsiva + dialogs
 "LayoutBuilder obrigatório: mobile < 640px, tablet 640-1024px, desktop > 1024px"
 ```
 
+### 🐛 **Problema 6: Estilos não fiéis ao React**
+**Solução**: Enfatize o uso dos temas customizados:
+```
+"OBRIGATÓRIO: Usar CustomTextTheme e NewAppColorTheme conforme tabelas de mapeamento"
+```
+
+### 🐛 **Problema 7: Componentes React não considerados**
+**Solução**: Destaque a importância dos imports:
+```
+"Analisar TODOS os imports de @/components/ui/* e converter cada um para Flutter"
+```
+
+### 🐛 **Problema 8: Espaçamentos incorretos**
+**Solução**: Forneça a tabela de conversão:
+```
+"Usar tabela de conversão Tailwind → EdgeInsets: p-4 = EdgeInsets.all(16)"
+```
+
 ---
 
 ## 📚 Recursos Adicionais
@@ -365,6 +498,9 @@ Layout: Tabela responsiva + dialogs
 - [ ] Validei os 6 arquivos gerados
 - [ ] Compilei sem erros
 - [ ] Testei todas as funcionalidades
+- [ ] Verifiquei fidelidade visual (tipografia, cores, espaçamentos)
+- [ ] Confirmei que todos os componentes React foram convertidos
+- [ ] Testei responsividade em diferentes breakpoints
 - [ ] Integrei na navegação do app
 - [ ] Documentei mudanças (se necessário)
 

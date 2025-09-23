@@ -63,7 +63,10 @@ class _TodoListScreenState extends State<TodoListScreen> {
         ],
       ),
       body: ListenableBuilder(
-        listenable: widget.viewModel,
+        listenable: Listenable.merge([
+          widget.viewModel,
+          widget.viewModel.getAllTasks,
+        ]),
         builder: (context, _) {
           if (widget.viewModel.getAllTasks.running) {
             return const LinearProgressIndicator();

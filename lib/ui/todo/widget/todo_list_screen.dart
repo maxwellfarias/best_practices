@@ -1,5 +1,6 @@
 // ignore_for_file: strict_top_level_inference
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:mastering_tests/domain/models/task_model.dart';
 import 'package:mastering_tests/ui/todo/viewmodel/task_viewmodel.dart';
@@ -69,7 +70,7 @@ class _TodoListScreenState extends State<TodoListScreen> {
         ]),
         builder: (context, _) {
           if (widget.viewModel.getAllTasks.running) {
-            return const LinearProgressIndicator();
+            return const CupertinoActivityIndicator();
           }
 
           if (widget.viewModel.getAllTasks.error) {

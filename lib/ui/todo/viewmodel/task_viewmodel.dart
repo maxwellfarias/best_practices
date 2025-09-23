@@ -14,17 +14,18 @@ final class TaskViewModel extends ChangeNotifier {
   }
   final TaskRepository _taskRepository;
 
-  final List<TaskModel> tasks = [];
-  late final Command0<List<TaskModel>> getAllTasks; 
-  late final Command1<TaskModel, String> getTaskBy; 
-  late final Command1<TaskModel, TaskModel> createTask; 
-  late final Command1<TaskModel, TaskModel> updateTask; 
-  late final Command1<dynamic, String> deleteTask; 
+  final List<TaskModel> _tasks = [];
+  List<TaskModel> get tasks => _tasks;
+  late final Command0<List<TaskModel>> getAllTasks;
+  late final Command1<TaskModel, String> getTaskBy;
+  late final Command1<TaskModel, TaskModel> createTask;
+  late final Command1<TaskModel, TaskModel> updateTask;
+  late final Command1<dynamic, String> deleteTask;
 
   Future<Result<List<TaskModel>>> _getAllTasks() async {
     return await _taskRepository.getAllTasks(databaseId: 'default')
     .map((tasks) {
-      this.tasks
+      _tasks
       ..clear()
       ..addAll(tasks);
       notifyListeners();
@@ -39,7 +40,7 @@ final class TaskViewModel extends ChangeNotifier {
   Future<Result<TaskModel>> _createTask(TaskModel task) async {
     return await _taskRepository.createTask(databaseId: 'default', task: task)
     .map((createdTask) {
-      tasks.add(createdTask);
+      _tasks.add(createdTask);
       notifyListeners();
       return createdTask;
     });
@@ -48,9 +49,9 @@ final class TaskViewModel extends ChangeNotifier {
   Future<Result<TaskModel>> _updateTask(TaskModel task) async {
     return await _taskRepository.updateTask(databaseId: 'default', task: task)
     .map((updatedTask) {
-      final index = tasks.indexWhere((t) => t.id == updatedTask.id);
+      final index = _tasks.indexWhere((t) => t.id == updatedTask.id);
       if (index != -1) {
-        tasks[index] = updatedTask;
+        _tasks[index] = updatedTask;
         notifyListeners();
       }
       return updatedTask;
@@ -60,7 +61,7 @@ final class TaskViewModel extends ChangeNotifier {
   Future<Result<dynamic>> _deleteTask(String taskId) async {
     return await _taskRepository.deleteTask(databaseId: 'default', taskId: taskId)
     .map((_) {
-      tasks.removeWhere((task) => task.id == taskId);
+      _tasks.removeWhere((task) => task.id == taskId);
       notifyListeners();
       return Result.ok(null);
     });

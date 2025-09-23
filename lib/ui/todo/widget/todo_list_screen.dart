@@ -1,6 +1,9 @@
+// ignore_for_file: strict_top_level_inference
+
 import 'package:flutter/material.dart';
 import 'package:mastering_tests/domain/models/task_model.dart';
 import 'package:mastering_tests/ui/todo/viewmodel/task_viewmodel.dart';
+import 'package:mastering_tests/utils/command.dart';
 
 final class TodoListScreen extends StatefulWidget {
   final TaskViewModel viewModel;
@@ -15,20 +18,36 @@ class _TodoListScreenState extends State<TodoListScreen> {
   @override
   void initState() {
     super.initState();
-    widget.viewModel.getTaskBy.addListener(_onGetTaskByChanged);
-    widget.viewModel.updateTask.addListener(_onUpdateTaskChanged);
-    widget.viewModel.deleteTask.addListener(_onDeleteTaskChanged);
-    widget.viewModel.createTask.addListener(_onCreateTaskChanged);
+    widget.viewModel.updateTask.addListener(() => _onResult(command: widget.viewModel.updateTask, successMessage: 'Tarefa atualizada com sucesso!'));
+    widget.viewModel.deleteTask.addListener(() => _onResult(command: widget.viewModel.deleteTask, successMessage: 'Tarefa excluída com sucesso!'));
+    widget.viewModel.createTask.addListener(() => _onResult(command: widget.viewModel.createTask, successMessage: 'Tarefa criada com sucesso!'));
     widget.viewModel.getAllTasks.execute();
   }
 
   @override
   void dispose() {
-    widget.viewModel.getTaskBy.removeListener(_onGetTaskByChanged);
-    widget.viewModel.updateTask.removeListener(_onUpdateTaskChanged);
-    widget.viewModel.deleteTask.removeListener(_onDeleteTaskChanged);
-    widget.viewModel.createTask.removeListener(_onCreateTaskChanged);
+    widget.viewModel.updateTask.removeListener(() => _onResult(command: widget.viewModel.updateTask, successMessage: 'Tarefa atualizada com sucesso!'));
+    widget.viewModel.deleteTask.removeListener(() => _onResult(command: widget.viewModel.deleteTask, successMessage: 'Tarefa excluída com sucesso!'));
+    widget.viewModel.createTask.removeListener(() => _onResult(command: widget.viewModel.createTask, successMessage: 'Tarefa criada com sucesso!'));
     super.dispose();
+  }
+
+  void _onResult({required Command command, required String successMessage}) {
+    if(command.error) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('Erro: ${command.errorMessage ?? 'Ocorreu um erro desconhecido.'}'),
+          backgroundColor: Colors.red,
+        ),
+      );
+    } else if (command.completed) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(successMessage),
+          backgroundColor: Colors.green,
+        ),
+      );
+    }
   }
 
   @override
@@ -60,7 +79,6 @@ class _TodoListScreenState extends State<TodoListScreen> {
                 ),
               ),
             );
-            ;
           }
 
           return Column(
@@ -219,72 +237,6 @@ class _TodoListScreenState extends State<TodoListScreen> {
         ],
       ),
     );
-  }
-
-  
-  void _onGetTaskByChanged() {
-    if(widget.viewModel.getTaskBy.error) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text('Erro ao carregar tarefa: ${widget.viewModel.getTaskBy.error}'),
-          backgroundColor: Colors.red,
-        ),
-      );
-    }
-  }
-
-  void _onCreateTaskChanged() {
-    if(widget.viewModel.createTask.error) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text('Erro ao carregar tarefa: ${widget.viewModel.createTask.error}'),
-          backgroundColor: Colors.red,
-        ),
-      );
-    } else if (widget.viewModel.createTask.completed) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text('Tarefa criada com sucesso!'),
-          backgroundColor: Colors.green,
-        ),
-      );
-    }
-  }
-
-  void _onUpdateTaskChanged() {
-    if(widget.viewModel.updateTask.error) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text('Erro ao carregar tarefa: ${widget.viewModel.updateTask.error}'),
-          backgroundColor: Colors.red,
-        ),
-      );
-    } else if (widget.viewModel.updateTask.completed) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text('Tarefa atualizada com sucesso!'),
-          backgroundColor: Colors.green,
-        ),
-      );
-    }
-  }
-
-  void _onDeleteTaskChanged() {
-    if(widget.viewModel.deleteTask.error) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text('Erro ao carregar tarefa: ${widget.viewModel.deleteTask.error}'),
-          backgroundColor: Colors.red,
-        ),
-      );
-    } else if (widget.viewModel.deleteTask.completed) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text('Tarefa excluída com sucesso!'),
-          backgroundColor: Colors.green,
-        ),
-      );
-    }
   }
 
   String _formatDate(DateTime date) {

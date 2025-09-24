@@ -363,6 +363,116 @@ final class TaskViewModel extends ChangeNotifier {
 - `dispose`: Remover todos os listeners
 - `_onResult`: Feedback visual para operações CRUD
 - `ListenableBuilder`: Estados loading/error/empty/success
+- **CONVERSÃO DE ESTILOS OBRIGATÓRIA**: Tipografia e cores conforme mapeamentos abaixo
+
+#### 🎨 **MAPEAMENTO DE ESTILOS OBRIGATÓRIO**
+
+##### 📝 **Tipografia (React Tailwind → Flutter CustomTextTheme)**
+
+**IMPORTANTE**: Todo `Theme.of(context).textTheme` DEVE ser substituído por `context.customTextTheme`:
+
+| React Tailwind Class | Tamanho | Peso | Flutter Equivalent (OBRIGATÓRIO) |
+|---------------------|---------|------|--------------------------------|
+| `text-4xl font-bold` | 36px | 700 | `context.customTextTheme.text4xlBold` |
+| `text-3xl font-bold` | 30px | 700 | `context.customTextTheme.text3xlBold` |
+| `text-2xl font-bold` | 24px | 700 | `context.customTextTheme.text2xlBold` |
+| `text-xl font-semibold` | 20px | 600 | `context.customTextTheme.textXlSemibold` |
+| `text-xl font-medium` | 20px | 500 | `context.customTextTheme.textXlMedium` |
+| `text-lg font-semibold` | 18px | 600 | `context.customTextTheme.textLgSemibold` |
+| `text-lg font-medium` | 18px | 500 | `context.customTextTheme.textLgMedium` |
+| `text-base font-medium` | 16px | 500 | `context.customTextTheme.textBaseMedium` |
+| `text-base` | 16px | 400 | `context.customTextTheme.textBase` |
+| `text-sm font-semibold` | 14px | 600 | `context.customTextTheme.textSmSemibold` |
+| `text-sm font-medium` | 14px | 500 | `context.customTextTheme.textSmMedium` |
+| `text-sm` | 14px | 400 | `context.customTextTheme.textSm` |
+| `text-xs font-medium` | 12px | 500 | `context.customTextTheme.textXsMedium` |
+| `text-xs` | 12px | 400 | `context.customTextTheme.textXs` |
+
+##### 🎨 **Cores (React CSS → Flutter NewAppColorTheme)**
+
+**IMPORTANTE**: Todo `Colors.*`, `Theme.of(context).colorScheme.*` DEVE ser substituído por `context.customColorTheme`:
+
+| React CSS Variable | Descrição | Flutter Equivalent (OBRIGATÓRIO) |
+|-------------------|-----------|--------------------------------|
+| `--background` | Fundo principal | `context.customColorTheme.background` |
+| `--foreground` | Texto principal | `context.customColorTheme.foreground` |
+| `--primary` | Cor primária | `context.customColorTheme.primary` |
+| `--primary-foreground` | Texto sobre primário | `context.customColorTheme.primaryForeground` |
+| `--primary-light` | Primário claro | `context.customColorTheme.primaryLight` |
+| `--primary-dark` | Primário escuro | `context.customColorTheme.primaryShade` |
+| `--secondary` | Cor secundária | `context.customColorTheme.secondary` |
+| `--secondary-foreground` | Texto sobre secundário | `context.customColorTheme.secondaryForeground` |
+| `--success` | Verde de sucesso | `context.customColorTheme.success` |
+| `--success-foreground` | Texto sobre sucesso | `context.customColorTheme.successForeground` |
+| `--warning` | Laranja de aviso | `context.customColorTheme.warning` |
+| `--warning-foreground` | Texto sobre aviso | `context.customColorTheme.warningForeground` |
+| `--destructive` | Vermelho de erro | `context.customColorTheme.destructive` |
+| `--destructive-foreground` | Texto sobre erro | `context.customColorTheme.destructiveForeground` |
+| `--card` | Fundo de cards | `context.customColorTheme.card` |
+| `--card-foreground` | Texto em cards | `context.customColorTheme.cardForeground` |
+| `--muted` | Fundo neutro | `context.customColorTheme.muted` |
+| `--muted-foreground` | Texto secundário | `context.customColorTheme.mutedForeground` |
+| `--accent` | Cor de destaque | `context.customColorTheme.accent` |
+| `--accent-foreground` | Texto sobre destaque | `context.customColorTheme.accentForeground` |
+| `--border` | Bordas | `context.customColorTheme.border` |
+| `--input` | Fundo de inputs | `context.customColorTheme.input` |
+| `--ring` | Foco/seleção | `context.customColorTheme.ring` |
+
+##### 🚫 **CONVERSÕES PROIBIDAS**
+
+❌ **NÃO usar**:
+- `Theme.of(context).textTheme.*`
+- `Colors.red`, `Colors.blue`, `Colors.green`, etc.
+- `context.colorScheme.*`
+- Cores hardcoded como `Color(0xFF...)`
+
+✅ **SEMPRE usar**:
+- `context.customTextTheme.*`
+- `context.customColorTheme.*`
+
+##### 📦 **Import Obrigatório**
+
+```dart
+import 'package:mastering_tests/ui/core/extensions/build_context_extension.dart';
+```
+
+##### 🎯 **Exemplos de Conversão Obrigatória**
+
+```dart
+// ❌ ERRADO - Não usar
+Text(
+  'Título',
+  style: Theme.of(context).textTheme.headlineSmall?.copyWith(
+    fontWeight: FontWeight.bold,
+    color: Colors.blue,
+  ),
+)
+
+// ✅ CORRETO - Usar sempre
+Text(
+  'Título',
+  style: context.customTextTheme.text2xlBold.copyWith(
+    color: context.customColorTheme.primary,
+  ),
+)
+
+// ❌ ERRADO - Card com cores hardcoded
+Card(
+  color: Colors.white,
+  child: Text('Conteúdo', style: TextStyle(color: Colors.black)),
+)
+
+// ✅ CORRETO - Card com tema customizado
+Card(
+  color: context.customColorTheme.card,
+  child: Text(
+    'Conteúdo',
+    style: context.customTextTheme.textBase.copyWith(
+      color: context.customColorTheme.cardForeground,
+    ),
+  ),
+)
+```
 
 ```dart
 import 'package:flutter/material.dart';
@@ -450,7 +560,9 @@ class _TodoListScreenState extends State<TodoListScreen> {
                 padding: const EdgeInsets.all(8.0),
                 child: Text(
                   'Erro ao carregar tarefas: ${widget.viewModel.getAllTasks.errorMessage}',
-                  style: const TextStyle(color: Colors.red),
+                  style: context.customTextTheme.textBase.copyWith(
+                    color: context.customColorTheme.destructive,
+                  ),
                 ),
               ),
             );
@@ -458,7 +570,14 @@ class _TodoListScreenState extends State<TodoListScreen> {
 
           /// ESTADO EMPTY OBRIGATÓRIO
           if (widget.viewModel.tasks.isEmpty) {
-            return const Center(child: Text('Nenhuma tarefa encontrada'));
+            return Center(
+              child: Text(
+                'Nenhuma tarefa encontrada',
+                style: context.customTextTheme.textLgMedium.copyWith(
+                  color: context.customColorTheme.mutedForeground,
+                ),
+              ),
+            );
           }
 
           /// ESTADO SUCCESS - LISTA DE DADOS
@@ -468,6 +587,7 @@ class _TodoListScreenState extends State<TodoListScreen> {
               final task = widget.viewModel.tasks[index];
               return Card(
                 margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
+                color: context.customColorTheme.card,
                 child: ListTile(
                   leading: Checkbox(
                     value: task.isCompleted,
@@ -475,20 +595,32 @@ class _TodoListScreenState extends State<TodoListScreen> {
                   ),
                   title: Text(
                     task.title,
-                    style: TextStyle(
+                    style: context.customTextTheme.textBaseMedium.copyWith(
+                      color: context.customColorTheme.cardForeground,
                       decoration: task.isCompleted ? TextDecoration.lineThrough : TextDecoration.none,
                     ),
                   ),
-                  subtitle: Text(task.description),
+                  subtitle: Text(
+                    task.description,
+                    style: context.customTextTheme.textSm.copyWith(
+                      color: context.customColorTheme.mutedForeground,
+                    ),
+                  ),
                   trailing: Row(
                     mainAxisSize: MainAxisSize.min,
                     children: [
                       IconButton(
-                        icon: const Icon(Icons.edit),
+                        icon: Icon(
+                          Icons.edit,
+                          color: context.customColorTheme.primary,
+                        ),
                         onPressed: () => _editTask(task),
                       ),
                       IconButton(
-                        icon: const Icon(Icons.delete),
+                        icon: Icon(
+                          Icons.delete,
+                          color: context.customColorTheme.destructive,
+                        ),
                         onPressed: () => _deleteTask(task.id),
                       ),
                     ],
@@ -502,6 +634,8 @@ class _TodoListScreenState extends State<TodoListScreen> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: _createNewTask,
+        backgroundColor: context.customColorTheme.primary,
+        foregroundColor: context.customColorTheme.primaryForeground,
         child: const Icon(Icons.add),
       ),
     );
@@ -521,7 +655,7 @@ class _TodoListScreenState extends State<TodoListScreen> {
 - [ ] **Repository Interface**: Interface com 5 métodos obrigatórios declarados
 - [ ] **Repository Implementation**: Implementação usando classe Mock
 - [ ] **ViewModel**: Command pattern com 5 commands obrigatórios
-- [ ] **UI Screen**: ListenableBuilder com 4 estados obrigatórios
+- [ ] **UI Screen**: ListenableBuilder com 4 estados obrigatórios + conversão de estilos
 
 ### ✅ **Fase 2: Padrões Arquiteturais (OBRIGATÓRIOS)**
 - [ ] **Command Pattern**: 5 commands implementados (getAll, getBy, create, update, delete)
@@ -540,6 +674,18 @@ class _TodoListScreenState extends State<TodoListScreen> {
 - [ ] **initState**: 3 listeners (create, update, delete) + `getAllTasks.execute()`
 - [ ] **dispose**: Remoção de todos os listeners
 - [ ] **_onResult**: Feedback visual com SnackBar para success/error
+
+### ✅ **Fase 4.1: Conversão de Estilos (OBRIGATÓRIA)**
+- [ ] **Import Build Context Extension**: `import 'package:mastering_tests/ui/core/extensions/build_context_extension.dart';`
+- [ ] **Tipografia Convertida**: Todos os `Theme.of(context).textTheme.*` substituídos por `context.customTextTheme.*`
+- [ ] **Cores Convertidas**: Todos os `Colors.*` e `context.colorScheme.*` substituídos por `context.customColorTheme.*`
+- [ ] **Headers**: Títulos usando `context.customTextTheme.text2xlBold` ou similar
+- [ ] **Cards**: Fundos usando `context.customColorTheme.card` e textos `context.customColorTheme.cardForeground`
+- [ ] **Botões**: Cores primárias usando `context.customColorTheme.primary/primaryForeground`
+- [ ] **Estados**: Success usando `context.customColorTheme.success`, Error usando `context.customColorTheme.destructive`
+- [ ] **Inputs**: Bordas usando `context.customColorTheme.border`, foco usando `context.customColorTheme.ring`
+- [ ] **Textos Secundários**: Usando `context.customColorTheme.mutedForeground`
+- [ ] **Validação**: Nenhuma cor hardcoded ou tema padrão Flutter sendo usado
 
 ### ✅ **Fase 5: Análise do Componente React**
 - [ ] **Props e Estado**: Identificar todas as props e hooks useState do componente

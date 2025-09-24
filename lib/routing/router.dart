@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:mastering_tests/routing/routes.dart';
+import 'package:mastering_tests/ui/curso_screen/widget/curso_screen.dart';
 import 'package:mastering_tests/ui/todo/viewmodel/task_viewmodel.dart';
 import 'package:mastering_tests/ui/todo/widget/todo_list_screen.dart';
 import 'package:mastering_tests/ui/turma_screen/viewmodel/turma_viewmodel.dart';

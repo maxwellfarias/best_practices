@@ -678,75 +678,7 @@ class _TodoListScreenState extends State<TodoListScreen> {
 | `useCallback()` | Método da classe | Cache de função |
 | `useMemo()` | `late final` ou getter | Cache de valor |
 
-## 📱 Breakpoints e Responsividade
 
-### 🔧 Implementação de Breakpoints
-```dart
-// Breakpoints padrão do projeto
-class Breakpoints {
-  static const double mobile = 640;
-  static const double tablet = 1024;
-  static const double desktop = 1200;
-}
-
-// Uso em LayoutBuilder
-Widget _buildResponsiveLayout(BuildContext context) {
-  return LayoutBuilder(
-    builder: (context, constraints) {
-      final width = constraints.maxWidth;
-      
-      if (width >= Breakpoints.desktop) {
-        return _buildDesktopLayout(context);
-      } else if (width >= Breakpoints.tablet) {
-        return _buildTabletLayout(context);
-      } else {
-        return _buildMobileLayout(context);
-      }
-    },
-  );
-}
-
-// Helpers para breakpoints
-extension ResponsiveContext on BuildContext {
-  bool get isMobile => MediaQuery.of(this).size.width < Breakpoints.mobile;
-  bool get isTablet => MediaQuery.of(this).size.width >= Breakpoints.mobile && 
-                       MediaQuery.of(this).size.width < Breakpoints.tablet;
-  bool get isDesktop => MediaQuery.of(this).size.width >= Breakpoints.tablet;
-  bool get isLargeDesktop => MediaQuery.of(this).size.width >= Breakpoints.desktop;
-}
-```
-
-### 📐 Grid Responsivo
-```dart
-Widget _buildResponsiveGrid(BuildContext context, List<Widget> items) {
-  return LayoutBuilder(
-    builder: (context, constraints) {
-      int crossAxisCount = 1; // Mobile
-      
-      if (constraints.maxWidth >= Breakpoints.desktop) {
-        crossAxisCount = 4; // Large Desktop
-      } else if (constraints.maxWidth >= Breakpoints.tablet) {
-        crossAxisCount = 3; // Desktop
-      } else if (constraints.maxWidth >= Breakpoints.mobile) {
-        crossAxisCount = 2; // Tablet
-      }
-
-      return GridView.builder(
-        shrinkWrap: true,
-        physics: const NeverScrollableScrollPhysics(),
-        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisCount: crossAxisCount,
-          crossAxisSpacing: 16,
-          mainAxisSpacing: 16,
-          childAspectRatio: 1.5,
-        ),
-        itemCount: items.length,
-        itemBuilder: (context, index) => items[index],
-      );
-    },
-  );
-}
-```
 
 ## 🔧 Templates de Código Prontos
 

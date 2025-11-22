@@ -1,29 +1,33 @@
-class Cursos {
-  int cursoID;
-  String nomeCurso;
-  int? codigoCursoEMEC;
-  String? numeroProcesso;
-  String? tipoProcesso;
-  DateTime? dataCadastro;
-  DateTime? dataProtocolo;
-  String modalidade;
-  String tituloConferido;
-  String grauConferido;
-  String logradouro;
-  String bairro;
-  int codigoMunicipio;
-  String nomeMunicipio;
-  String uf;
-  String cep;
-  String autorizacaoTipo;
-  String autorizacaoNumero;
-  DateTime autorizacaoData;
-  String reconhecimentoTipo;
-  String reconhecimentoNumero;
-  DateTime reconhecimentoData;
+/// Modelo de domínio para um curso acadêmico
+///
+/// Representa um curso no sistema com todos os dados necessários
+/// para a lógica de negócio conforme padrões do MEC.
+final class Cursos {
+  final int cursoID;
+  final String nomeCurso;
+  final int? codigoCursoEMEC;
+  final String? numeroProcesso;
+  final String? tipoProcesso;
+  final DateTime? dataCadastro;
+  final DateTime? dataProtocolo;
+  final String modalidade;
+  final String tituloConferido;
+  final String grauConferido;
+  final String logradouro;
+  final String bairro;
+  final int codigoMunicipio;
+  final String nomeMunicipio;
+  final String uf;
+  final String cep;
+  final String autorizacaoTipo;
+  final String autorizacaoNumero;
+  final DateTime autorizacaoData;
+  final String reconhecimentoTipo;
+  final String reconhecimentoNumero;
+  final DateTime reconhecimentoData;
 
-  // Construtor
-  Cursos({
+  /// Construtor
+  const Cursos({
     required this.cursoID,
     required this.nomeCurso,
     this.codigoCursoEMEC,

@@ -1,9 +1,8 @@
-import 'package:mastering_tests/domain/models/curso_model.dart';
-import 'package:mastering_tests/exceptions/app_exception.dart';
-import 'package:mastering_tests/utils/result.dart';
+import 'package:best_practices/domain/models/curso_model.dart';
+import 'package:best_practices/exceptions/app_exception.dart';
+import 'package:best_practices/utils/result.dart';
 
-/// Classe utilitária para criar dados fictícios de CursoModel
-/// Simula operações CRUD com dados mockados baseados no React CoursesGrid
+/// Classe utilitária para criar dados fictícios de Cursos
 class CursoMock {
   static List<Cursos> _cursos = [];
 
@@ -126,8 +125,8 @@ class CursoMock {
     }
   }
 
-  /// Simula busca de todos os cursos com delay de rede
-  static Future<Result<List<Cursos>>> getMockCursos() async {
+  /// 1. Buscar todos os cursos
+  static Future<Result<List<Cursos>>> getAllCursos() async {
     await Future.delayed(const Duration(seconds: 2));
     _initializeIfEmpty();
     
@@ -138,9 +137,9 @@ class CursoMock {
     }
   }
 
-  /// Simula busca de curso por ID
-  static Future<Result<Cursos>> getMockCursoById(int cursoId) async {
-    await Future.delayed(const Duration(seconds: 1));
+  /// 2. Buscar curso por ID
+  static Future<Result<Cursos>> getCursoById({required int cursoId}) async {
+    await Future.delayed(const Duration(seconds: 2));
     _initializeIfEmpty();
     
     try {
@@ -158,8 +157,8 @@ class CursoMock {
     }
   }
 
-  /// Simula criação de novo curso
-  static Future<Result<Cursos>> addCurso(Cursos curso) async {
+  /// 3. Criar novo curso
+  static Future<Result<Cursos>> createCurso({required Cursos curso}) async {
     await Future.delayed(const Duration(seconds: 2));
     _initializeIfEmpty();
     
@@ -167,30 +166,7 @@ class CursoMock {
       // Gera novo ID
       final newId = _cursos.isEmpty ? 1 : _cursos.map((c) => c.cursoID).reduce((a, b) => a > b ? a : b) + 1;
       
-      final novoCurso = Cursos(
-        cursoID: newId,
-        nomeCurso: curso.nomeCurso,
-        codigoCursoEMEC: curso.codigoCursoEMEC,
-        numeroProcesso: curso.numeroProcesso,
-        tipoProcesso: curso.tipoProcesso,
-        dataCadastro: curso.dataCadastro ?? DateTime.now(),
-        dataProtocolo: curso.dataProtocolo,
-        modalidade: curso.modalidade,
-        tituloConferido: curso.tituloConferido,
-        grauConferido: curso.grauConferido,
-        logradouro: curso.logradouro,
-        bairro: curso.bairro,
-        codigoMunicipio: curso.codigoMunicipio,
-        nomeMunicipio: curso.nomeMunicipio,
-        uf: curso.uf,
-        cep: curso.cep,
-        autorizacaoTipo: curso.autorizacaoTipo,
-        autorizacaoNumero: curso.autorizacaoNumero,
-        autorizacaoData: curso.autorizacaoData,
-        reconhecimentoTipo: curso.reconhecimentoTipo,
-        reconhecimentoNumero: curso.reconhecimentoNumero,
-        reconhecimentoData: curso.reconhecimentoData,
-      );
+      final novoCurso = curso.copyWith(cursoID: newId);
       
       _cursos.add(novoCurso);
       return Result.ok(novoCurso);
@@ -199,8 +175,8 @@ class CursoMock {
     }
   }
 
-  /// Simula atualização de curso existente
-  static Future<Result<Cursos>> updateCurso(Cursos curso) async {
+  /// 4. Atualizar curso existente
+  static Future<Result<Cursos>> updateCurso({required Cursos curso}) async {
     await Future.delayed(const Duration(seconds: 2));
     _initializeIfEmpty();
     
@@ -217,9 +193,9 @@ class CursoMock {
     }
   }
 
-  /// Simula exclusão de curso
-  static Future<Result<bool>> deleteCurso(int cursoId) async {
-    await Future.delayed(const Duration(seconds: 1));
+  /// 5. Deletar curso
+  static Future<Result<bool>> deleteCurso({required int cursoId}) async {
+    await Future.delayed(const Duration(seconds: 2));
     _initializeIfEmpty();
     
     try {
@@ -236,19 +212,27 @@ class CursoMock {
     }
   }
 
-  /// Limpa todos os dados (útil para testes)
-  static void clearAllCursos() {
+  /// Métodos utilitários adicionais
+
+  /// Limpar todos os dados (útil para testes)
+  static void clearAll() {
     _cursos.clear();
   }
 
-  /// Restaura dados iniciais
-  static void resetToInitialState() {
+  /// Contar total de cursos
+  static int count() {
+    _initializeIfEmpty();
+    return _cursos.length;
+  }
+
+  /// Resetar para estado inicial
+  static void reset() {
     _cursos.clear();
     _initializeIfEmpty();
   }
 
-  /// Busca cursos por modalidade
-  static Future<Result<List<Cursos>>> getCursosByModalidade(String modalidade) async {
+  /// Buscar cursos por modalidade
+  static Future<Result<List<Cursos>>> getCursosByModalidade({required String modalidade}) async {
     await Future.delayed(const Duration(seconds: 1));
     _initializeIfEmpty();
     
@@ -263,8 +247,8 @@ class CursoMock {
     }
   }
 
-  /// Busca cursos por grau conferido
-  static Future<Result<List<Cursos>>> getCursosByGrau(String grauConferido) async {
+  /// Buscar cursos por grau
+  static Future<Result<List<Cursos>>> getCursosByGrau({required String grauConferido}) async {
     await Future.delayed(const Duration(seconds: 1));
     _initializeIfEmpty();
     
@@ -277,52 +261,5 @@ class CursoMock {
     } catch (e) {
       return Result.error(UnknownErrorException());
     }
-  }
-
-  /// Busca cursos por município
-  static Future<Result<List<Cursos>>> getCursosByMunicipio(String nomeMunicipio) async {
-    await Future.delayed(const Duration(seconds: 1));
-    _initializeIfEmpty();
-    
-    try {
-      final cursosFiltrados = _cursos.where((curso) => 
-          curso.nomeMunicipio.toLowerCase().contains(nomeMunicipio.toLowerCase())
-      ).toList();
-      
-      return Result.ok(cursosFiltrados);
-    } catch (e) {
-      return Result.error(UnknownErrorException());
-    }
-  }
-
-  /// Obtém listas de valores únicos para filtros/dropdowns
-  static List<String> getModalidades() {
-    _initializeIfEmpty();
-    return _cursos.map((c) => c.modalidade).toSet().toList()..sort();
-  }
-
-  static List<String> getGrausConferidos() {
-    _initializeIfEmpty();
-    return _cursos.map((c) => c.grauConferido).toSet().toList()..sort();
-  }
-
-  static List<String> getTiposProcesso() {
-    _initializeIfEmpty();
-    return _cursos.map((c) => c.tipoProcesso).where((t) => t != null).cast<String>().toSet().toList()..sort();
-  }
-
-  static List<String> getTiposAutorizacao() {
-    _initializeIfEmpty();
-    return _cursos.map((c) => c.autorizacaoTipo).toSet().toList()..sort();
-  }
-
-  static List<String> getEstados() {
-    _initializeIfEmpty();
-    return _cursos.map((c) => c.uf).toSet().toList()..sort();
-  }
-
-  static List<String> getMunicipios() {
-    _initializeIfEmpty();
-    return _cursos.map((c) => c.nomeMunicipio).toSet().toList()..sort();
   }
 }

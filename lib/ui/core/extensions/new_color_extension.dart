@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:mastering_tests/ui/core/themes/new_colors.dart';
+import 'package:best_practices/ui/core/themes/new_colors.dart';
 
 class NewAppColorTheme extends ThemeExtension<NewAppColorTheme> {
   // Base colors

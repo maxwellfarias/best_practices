@@ -1,5 +1,5 @@
-import 'package:mastering_tests/exceptions/app_exception.dart';
-import 'package:mastering_tests/utils/result.dart';
+import 'package:best_practices/exceptions/app_exception.dart';
+import 'package:best_practices/utils/result.dart';
 
 import '../../domain/models/task_model.dart';
 

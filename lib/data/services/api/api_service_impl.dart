@@ -1,21 +1,14 @@
 import 'package:dio/dio.dart';
-import 'package:mastering_tests/data/services/api/api_serivce.dart';
-import 'package:mastering_tests/exceptions/app_exception.dart';
-import 'package:mastering_tests/utils/result.dart';
-import '../../models/task_api_model.dart';
+import 'package:best_practices/data/services/api/api_serivce.dart';
+import 'package:best_practices/exceptions/app_exception.dart';
+import 'package:best_practices/utils/logger/custom_logger.dart';
+import 'package:best_practices/utils/result.dart';
 
-/// Interface para o serviço de API de tarefas
-/// 
-/// Define o contrato para comunicação com a API REST.
-/// Separado do repositório para permitir diferentes implementações
-/// (Supabase, Firebase, REST API customizada, etc.)
-
-
-/// Implementação do serviço usando Supabase REST API
 class ApiClientImpl implements ApiClient {
   final Dio _dio;
+  final CustomLogger _logger;
 
-  ApiClientImpl({ required Dio dio})  : _dio = dio;
+  ApiClientImpl({required Dio dio, required CustomLogger logger})  : _dio = dio, _logger = logger;
 
   final timeOutDuration = Duration(seconds: 10);
   // final String _logTag = 'ApiClient';
@@ -49,8 +42,8 @@ class ApiClientImpl implements ApiClient {
           break;
       }
       return _handleResponse(response);
-    } catch (e) {
-      // AppLogger.error( 'Erro inesperado na requisição ${metodo.name} para $url', tag: _logTag, error: e, stackTrace: stackTrace);
+    } catch (e, stackTrace) {
+      _logger.error('Erro inesperado na requisição ${metodo.name} para $url: $e', error: e, stackTrace: stackTrace);
       return Result.error(UnknownErrorException());
     }
   }
@@ -58,31 +51,31 @@ class ApiClientImpl implements ApiClient {
   Result<dynamic> _handleResponse(Response response) {
     switch (response.statusCode) {
       case 200:
-        // AppLogger.debug('Resposta HTTP 200 - Sucesso', tag: _logTag);
+        _logger.debug('Resposta HTTP 200 - Sucesso');
         return Result.ok(response.data);
       case 204:
-        // AppLogger.debug('Resposta HTTP 204 - Sem conteúdo', tag: _logTag);
+        _logger.debug('Resposta HTTP 204 - Sem conteúdo');
         return Result.ok(null);
       case 400:
-        // AppLogger.warning('Resposta HTTP 400 - Requisição inválida', tag: _logTag);
+        _logger.warning('Resposta HTTP 400 - Requisição inválida');
         return Result.error(ErroDeComunicacaoException());
       case 401:
-        // AppLogger.warning('Resposta HTTP 401 - Não autorizado', tag: _logTag);
+        _logger.warning('Resposta HTTP 401 - Não autorizado');
         return Result.error(SessaoExpiradaException());
       case 403:
-        // AppLogger.warning('Resposta HTTP 403 - Acesso negado', tag: _logTag);
+        _logger.warning('Resposta HTTP 403 - Acesso negado');
         return Result.error(AcessoNegadoException());
       case 404:
-        // AppLogger.warning('Resposta HTTP 404 - Recurso não encontrado', tag: _logTag);
+        _logger.warning('Resposta HTTP 404 - Recurso não encontrado');
         return Result.error(RecursoNaoEncontradoException());
       case 500:
-        // AppLogger.error('Resposta HTTP 500 - Erro interno do servidor', tag: _logTag);
+        _logger.error('Resposta HTTP 500 - Erro interno do servidor');
         return Result.error(ErroInternoServidorException());
       case 503:
-        // AppLogger.error('Resposta HTTP 503 - Servidor indisponível', tag: _logTag);
+        _logger.error('Resposta HTTP 503 - Servidor indisponível');
         return Result.error(ServidorIndisponivelException());
       default:
-        // AppLogger.error('Resposta HTTP ${response.statusCode} - Erro desconhecido', tag: _logTag);
+        _logger.error('Resposta HTTP ${response.statusCode} - Erro desconhecido');
         return Result.error(UnknownErrorException());
     }
   }

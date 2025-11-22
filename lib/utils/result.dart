@@ -72,7 +72,7 @@
 // =============================================================================
 
 
-import 'package:mastering_tests/exceptions/app_exception.dart';
+import 'package:best_practices/exceptions/app_exception.dart';
 
 /// 🎯 **Result Pattern** - Classe base para operações que podem falhar
 /// 

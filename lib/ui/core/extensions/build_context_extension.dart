@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:mastering_tests/ui/core/extensions/new_color_extension.dart';
-import 'package:mastering_tests/ui/core/themes/custom_text_style.dart';
-import 'package:mastering_tests/ui/core/themes/dimens.dart';
+import 'package:best_practices/ui/core/extensions/new_color_extension.dart';
+import 'package:best_practices/ui/core/themes/custom_text_style.dart';
+import 'package:best_practices/ui/core/themes/dimens.dart';
 
 
 extension CustomTextThemeContextExtension on BuildContext {

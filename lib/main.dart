@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:mastering_tests/config/dependencies.dart';
-import 'package:mastering_tests/routing/router.dart';
-import 'package:mastering_tests/ui/core/themes/theme.dart';
+import 'package:best_practices/config/dependencies.dart';
+import 'package:best_practices/routing/router.dart';
+import 'package:best_practices/ui/core/themes/theme.dart';
 import 'package:provider/provider.dart';
 
 void main() {

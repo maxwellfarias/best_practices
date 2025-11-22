@@ -1,8 +1,8 @@
 import 'dart:async';
-import 'package:mastering_tests/data/services/api/api_serivce.dart';
-import 'package:mastering_tests/domain/models/task_model.dart';
-import 'package:mastering_tests/exceptions/app_exception.dart';
-import 'package:mastering_tests/utils/logger/custom_logger.dart';
+import 'package:best_practices/data/services/api/api_serivce.dart';
+import 'package:best_practices/domain/models/task_model.dart';
+import 'package:best_practices/exceptions/app_exception.dart';
+import 'package:best_practices/utils/logger/custom_logger.dart';
 import '../../../utils/result.dart';
 import 'task_repository.dart';
 

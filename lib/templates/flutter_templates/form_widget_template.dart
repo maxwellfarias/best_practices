@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:mastering_tests/ui/core/extensions/build_context_extension.dart';
+import 'package:best_practices/ui/core/extensions/build_context_extension.dart';
 
 /// [DESCRIPTION]
 /// Formulário com validação inspirado no React Hook Form

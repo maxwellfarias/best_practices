@@ -1,8 +1,8 @@
 import 'package:flutter/widgets.dart';
-import 'package:mastering_tests/data/repositories/task/task_repository.dart';
-import 'package:mastering_tests/domain/models/task_model.dart';
-import 'package:mastering_tests/utils/command.dart';
-import 'package:mastering_tests/utils/result.dart';
+import 'package:best_practices/data/repositories/task/task_repository.dart';
+import 'package:best_practices/domain/models/task_model.dart';
+import 'package:best_practices/utils/command.dart';
+import 'package:best_practices/utils/result.dart';
 
 final class TaskViewModel extends ChangeNotifier {
   TaskViewModel({required TaskRepository taskRepository}) : _taskRepository = taskRepository {

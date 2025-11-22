@@ -1,6 +1,6 @@
 
 import 'package:logger/web.dart';
-import 'package:mastering_tests/utils/logger/custom_logger.dart';
+import 'package:best_practices/utils/logger/custom_logger.dart';
 
 /// Esta classe é responsável por registrar logs da aplicação.
 /// Ela fornece métodos para registrar mensagens de informação, aviso, erro e depuração.

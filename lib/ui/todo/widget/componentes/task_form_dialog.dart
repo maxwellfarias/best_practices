@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:mastering_tests/domain/models/task_model.dart';
-import 'package:mastering_tests/ui/core/extensions/build_context_extension.dart';
+import 'package:best_practices/domain/models/task_model.dart';
+import 'package:best_practices/ui/core/extensions/build_context_extension.dart';
 
 /// Dialog for creating and editing tasks
 ///

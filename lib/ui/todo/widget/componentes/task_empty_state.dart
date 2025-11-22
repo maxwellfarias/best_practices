@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:mastering_tests/ui/core/extensions/build_context_extension.dart';
+import 'package:best_practices/ui/core/extensions/build_context_extension.dart';
 
 /// Widget for empty state (when there are no tasks)
 class TaskEmptyState extends StatelessWidget {

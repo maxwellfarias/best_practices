@@ -1,6 +1,6 @@
 {
-    "name": "mastering_tests",
-    "short_name": "mastering_tests",
+    "name": "best_practices",
+    "short_name": "best_practices",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",

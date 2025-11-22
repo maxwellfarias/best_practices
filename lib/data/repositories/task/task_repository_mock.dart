@@ -1,6 +1,6 @@
 import 'dart:async';
-import 'package:mastering_tests/domain/models/task_model.dart';
-import 'package:mastering_tests/templates/flutter_templates/simple_mock_template.dart';
+import 'package:best_practices/domain/models/task_model.dart';
+import 'package:best_practices/templates/flutter_templates/simple_mock_template.dart';
 import '../../../utils/result.dart';
 import 'task_repository.dart';
 

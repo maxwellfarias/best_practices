@@ -1,7 +1,7 @@
 
 import 'dart:async';
 import 'package:flutter/foundation.dart';
-import 'package:mastering_tests/exceptions/app_exception.dart';
+import 'package:best_practices/exceptions/app_exception.dart';
 
 import 'result.dart';
 

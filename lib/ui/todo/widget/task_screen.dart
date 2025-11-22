@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:mastering_tests/domain/models/task_model.dart';
-import 'package:mastering_tests/ui/todo/viewmodel/task_viewmodel.dart';
-import 'package:mastering_tests/ui/core/extensions/build_context_extension.dart';
-import 'package:mastering_tests/utils/command.dart';
+import 'package:best_practices/domain/models/task_model.dart';
+import 'package:best_practices/ui/todo/viewmodel/task_viewmodel.dart';
+import 'package:best_practices/ui/core/extensions/build_context_extension.dart';
+import 'package:best_practices/utils/command.dart';
 import 'componentes/task_card.dart';
 import 'componentes/task_form_dialog.dart';
 import 'componentes/task_empty_state.dart';

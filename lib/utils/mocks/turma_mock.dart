@@ -1,6 +1,6 @@
-import 'package:mastering_tests/domain/models/turma_model.dart';
-import 'package:mastering_tests/exceptions/app_exception.dart';
-import 'package:mastering_tests/utils/result.dart';
+import 'package:best_practices/domain/models/turma_model.dart';
+import 'package:best_practices/exceptions/app_exception.dart';
+import 'package:best_practices/utils/result.dart';
 
 /// Classe utilitária para criar dados fictícios de TurmaModel
 /// Simula operações CRUD com dados mockados para desenvolvimento

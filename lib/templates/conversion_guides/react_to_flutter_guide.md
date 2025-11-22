@@ -241,8 +241,8 @@ abstract interface class TaskRepository {
 **Path**: `/lib/data/repositories/{nome_modelo}/{nome_modelo}_repository_impl.dart`
 
 ```dart
-import 'package:mastering_tests/domain/models/task_model.dart';
-import 'package:mastering_tests/utils/mocks/task_mock.dart';
+import 'package:best_practices/domain/models/task_model.dart';
+import 'package:best_practices/utils/mocks/task_mock.dart';
 import '../../utils/result.dart';
 import 'task_repository.dart';
 
@@ -283,10 +283,10 @@ class TaskRepositoryImpl implements TaskRepository {
 
 ```dart
 import 'package:flutter/widgets.dart';
-import 'package:mastering_tests/data/repositories/task/task_repository.dart';
-import 'package:mastering_tests/domain/models/task_model.dart';
-import 'package:mastering_tests/utils/command.dart';
-import 'package:mastering_tests/utils/result.dart';
+import 'package:best_practices/data/repositories/task/task_repository.dart';
+import 'package:best_practices/domain/models/task_model.dart';
+import 'package:best_practices/utils/command.dart';
+import 'package:best_practices/utils/result.dart';
 
 final class TaskViewModel extends ChangeNotifier {
   TaskViewModel({required TaskRepository taskRepository}) : _taskRepository = taskRepository {
@@ -462,7 +462,7 @@ Para evitar que a screen principal fique muito grande, **DEVE-SE** criar uma pas
 ##### 📦 **Import Obrigatório**
 
 ```dart
-import 'package:mastering_tests/ui/core/extensions/build_context_extension.dart';
+import 'package:best_practices/ui/core/extensions/build_context_extension.dart';
 ```
 
 ##### 🎯 **Exemplos de Conversão Obrigatória**
@@ -506,9 +506,9 @@ Card(
 ```dart
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:mastering_tests/domain/models/task_model.dart';
-import 'package:mastering_tests/ui/todo/viewmodel/task_viewmodel.dart';
-import 'package:mastering_tests/utils/command.dart';
+import 'package:best_practices/domain/models/task_model.dart';
+import 'package:best_practices/ui/todo/viewmodel/task_viewmodel.dart';
+import 'package:best_practices/utils/command.dart';
 
 final class TodoListScreen extends StatefulWidget {
   final TaskViewModel viewModel;
@@ -705,7 +705,7 @@ class _TodoListScreenState extends State<TodoListScreen> {
 - [ ] **_onResult**: Feedback visual com SnackBar para success/error
 
 ### ✅ **Fase 4.1: Conversão de Estilos (OBRIGATÓRIA)**
-- [ ] **Import Build Context Extension**: `import 'package:mastering_tests/ui/core/extensions/build_context_extension.dart';`
+- [ ] **Import Build Context Extension**: `import 'package:best_practices/ui/core/extensions/build_context_extension.dart';`
 - [ ] **Tipografia Convertida**: Todos os `Theme.of(context).textTheme.*` substituídos por `context.customTextTheme.*`
 - [ ] **Cores Convertidas**: Todos os `Colors.*` e `context.colorScheme.*` substituídos por `context.customColorTheme.*`
 - [ ] **Headers**: Títulos usando `context.customTextTheme.text2xlBold` ou similar

@@ -1,9 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:mastering_tests/ui/core/extensions/color_extension.dart';
-import 'package:mastering_tests/ui/core/extensions/new_color_extension.dart';
-import 'package:mastering_tests/ui/core/themes/custom_text_style.dart';
-import 'package:mastering_tests/ui/core/themes/new_colors.dart';
+import 'package:best_practices/ui/core/extensions/color_extension.dart';
+import 'package:best_practices/ui/core/extensions/new_color_extension.dart';
+import 'package:best_practices/ui/core/themes/custom_text_style.dart';
+import 'package:best_practices/ui/core/themes/new_colors.dart';
 import 'colors.dart';
 
 abstract final class AppTheme {

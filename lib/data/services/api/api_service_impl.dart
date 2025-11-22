@@ -1,8 +1,8 @@
 import 'package:dio/dio.dart';
-import 'package:mastering_tests/data/services/api/api_serivce.dart';
-import 'package:mastering_tests/exceptions/app_exception.dart';
-import 'package:mastering_tests/utils/logger/custom_logger.dart';
-import 'package:mastering_tests/utils/result.dart';
+import 'package:best_practices/data/services/api/api_serivce.dart';
+import 'package:best_practices/exceptions/app_exception.dart';
+import 'package:best_practices/utils/logger/custom_logger.dart';
+import 'package:best_practices/utils/result.dart';
 
 class ApiClientImpl implements ApiClient {
   final Dio _dio;

@@ -1,4 +1,4 @@
-import 'package:mastering_tests/domain/models/task_model.dart';
+import 'package:best_practices/domain/models/task_model.dart';
 
 import '../../../utils/result.dart';
 

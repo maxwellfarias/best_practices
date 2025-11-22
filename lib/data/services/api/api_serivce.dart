@@ -1,4 +1,4 @@
-import 'package:mastering_tests/utils/result.dart';
+import 'package:best_practices/utils/result.dart';
 
 enum MetodoHttp {
   get,

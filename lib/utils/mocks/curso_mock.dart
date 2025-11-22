@@ -1,6 +1,6 @@
-import 'package:mastering_tests/domain/models/curso_model.dart';
-import 'package:mastering_tests/exceptions/app_exception.dart';
-import 'package:mastering_tests/utils/result.dart';
+import 'package:best_practices/domain/models/curso_model.dart';
+import 'package:best_practices/exceptions/app_exception.dart';
+import 'package:best_practices/utils/result.dart';
 
 /// Classe utilitária para criar dados fictícios de Cursos
 class CursoMock {

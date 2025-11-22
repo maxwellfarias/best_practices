@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:mastering_tests/routing/routes.dart';
-import 'package:mastering_tests/ui/todo/viewmodel/task_viewmodel.dart';
-import 'package:mastering_tests/ui/todo/widget/task_screen.dart';
+import 'package:best_practices/routing/routes.dart';
+import 'package:best_practices/ui/todo/viewmodel/task_viewmodel.dart';
+import 'package:best_practices/ui/todo/widget/task_screen.dart';
 import 'package:provider/provider.dart';
 
 GoRouter router() => GoRouter(

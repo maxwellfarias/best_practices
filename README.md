@@ -278,7 +278,7 @@ Provider(
 1. Clone the repository
 ```bash
 git clone <repository-url>
-cd mastering_tests
+cd best_practices
 ```
 
 2. Install dependencies
@@ -299,7 +299,7 @@ The app uses **TaskRepositoryMock** by default, which provides mock data without
 
 2. Uncomment the `TaskRepositoryImpl` import:
 ```dart
-import 'package:mastering_tests/data/repositories/task/task_repository_impl.dart';
+import 'package:best_practices/data/repositories/task/task_repository_impl.dart';
 ```
 
 3. Comment out the mock provider and uncomment the real API provider:

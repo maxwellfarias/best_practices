@@ -2,14 +2,14 @@
 
 import 'package:dio/dio.dart';
 import 'package:logger/web.dart';
-import 'package:mastering_tests/data/repositories/task/task_repository.dart';
-// import 'package:mastering_tests/data/repositories/task/task_repository_impl.dart'; // Uncomment to use real API
-import 'package:mastering_tests/data/repositories/task/task_repository_mock.dart';
-import 'package:mastering_tests/data/services/api/api_serivce.dart';
-import 'package:mastering_tests/data/services/api/api_service_impl.dart';
-import 'package:mastering_tests/ui/todo/viewmodel/task_viewmodel.dart';
-import 'package:mastering_tests/utils/logger/custom_logger.dart';
-import 'package:mastering_tests/utils/logger/custom_logger_impl.dart';
+import 'package:best_practices/data/repositories/task/task_repository.dart';
+// import 'package:best_practices/data/repositories/task/task_repository_impl.dart'; // Uncomment to use real API
+import 'package:best_practices/data/repositories/task/task_repository_mock.dart';
+import 'package:best_practices/data/services/api/api_serivce.dart';
+import 'package:best_practices/data/services/api/api_service_impl.dart';
+import 'package:best_practices/ui/todo/viewmodel/task_viewmodel.dart';
+import 'package:best_practices/utils/logger/custom_logger.dart';
+import 'package:best_practices/utils/logger/custom_logger_impl.dart';
 import 'package:provider/provider.dart';
 import 'package:provider/single_child_widget.dart';
 

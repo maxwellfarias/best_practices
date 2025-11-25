@@ -9,7 +9,7 @@ import 'colors.dart';
 abstract final class AppTheme {
 
 
-static _border([Color color = AppColors.grey300]) => OutlineInputBorder(
+static OutlineInputBorder _border([Color color = AppColors.grey300]) => OutlineInputBorder(
         borderSide: BorderSide(
           color: color,
           width: 1,

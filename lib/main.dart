@@ -5,9 +5,8 @@ import 'package:best_practices/ui/core/themes/theme.dart';
 import 'package:provider/provider.dart';
 
 void main() {
-  runApp( MultiProvider(providers: providers, child: TaskApp()));
+  runApp(MultiProvider(providers: providers, child: TaskApp()));
 }
-
 
 final class TaskApp extends StatelessWidget {
   const TaskApp({super.key});
@@ -16,7 +15,7 @@ final class TaskApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp.router(
       title: 'Task App',
-      themeMode: ThemeMode.system,
+      themeMode: ThemeMode.dark,
       theme: AppTheme.lightTheme,
       darkTheme: AppTheme.darkTheme,
       routerConfig: router(),

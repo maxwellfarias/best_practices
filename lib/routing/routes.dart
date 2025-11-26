@@ -5,4 +5,5 @@ abstract interface class Routes {
   static String viewTask = '/view-task';
   static String taskDetail = '/task-detail';
   static String turmas = '/turmas';
+  static String attachedFiles = '/attached-files';
 }
